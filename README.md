@@ -18,3 +18,8 @@ python3 -m http.server 8080
 ```
 
 O publicalo con GitHub Pages apuntando a la carpeta `solar-system/`.
+
+Tambien existe [`solar-system/standalone.html`](./solar-system/standalone.html): la misma
+app empaquetada en un unico archivo HTML sin dependencias externas (three.js
+incluido inline). Sirve para abrirla directo con doble clic o subirla a
+cualquier hosting estatico sin necesidad de la carpeta `vendor/`.
