@@ -1,0 +1,14 @@
+{
+  "name": "Sistema Solar Interactivo",
+  "short_name": "Sist. Solar",
+  "description": "Modelo 3D interactivo del sistema solar",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#03040a",
+  "theme_color": "#03040a",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
