@@ -29,18 +29,18 @@
 
 **Status:** ⏳ TODO | ⏸️ IN PROGRESS | ✅ DONE
 
-### Step 2a: Download FinancialPhraseBank
+### Step 2a: Download Customer Feedback Dataset
 - [ ] Download dataset from [Kaggle](https://www.kaggle.com/datasets/sbhatti/financial-phrase-bank-sentences)
   - Alternative: Selenium scrape from original paper
   - Expected size: ~4,840 sentences, 3 classes
-- [ ] Extract and place in `data/raw/FinancialPhraseBank/`
+- [ ] Extract and place in `data/raw/Customer Feedback Dataset/`
 
 ### Step 2b: Exploratory Data Analysis (EDA)
-- [ ] **Create notebook:** `notebooks/01_eda_financial_data.ipynb`
+- [ ] **Create notebook:** `notebooks/01_eda_feedback_data.ipynb`
 - [ ] Load dataset:
   ```python
   import pandas as pd
-  df = pd.read_csv("data/raw/FinancialPhraseBank.csv")
+  df = pd.read_csv("data/raw/Customer Feedback Dataset.csv")
   ```
 - [ ] Answer these questions:
   - [ ] Dataset shape? (rows, columns)
@@ -63,9 +63,9 @@
 
 ### Step 2d: Create Data Loading Pipeline
 - [ ] Create file: `src/data/loader.py`
-- [ ] Implement `FinancialSentimentDataset` class:
+- [ ] Implement `CustomerFeedbackDataset` class:
   ```python
-  class FinancialSentimentDataset:
+  class CustomerFeedbackDataset:
       def __init__(self, texts: List[str], labels: List[int]):
           # TODO
       

@@ -1,8 +1,8 @@
 # 🚀 Quick Start Guide
 
-**Welcome to Financial Sentiment Analysis Project!**
+**Welcome to Customer Feedback NLP/ML System!**
 
-This is a production-grade sentiment analysis system for financial texts. You'll build it step-by-step with guidance, learning enterprise ML practices along the way.
+This is a production-grade sentiment analysis system for customer feedback across reviews, surveys, and support tickets. You'll build it step-by-step with guidance, learning enterprise ML practices along the way.
 
 ---
 
@@ -42,7 +42,7 @@ This project demonstrates:
 ### 3. Understand the Structure (10 minutes)
 
 ```
-project-01-financial-sentiment/
+project-01-customer-feedback-nlp/
 ├── README.md                    ← Start here for overview
 ├── DEVELOPMENT_GUIDE.md         ← Detailed phase-by-phase plan
 ├── PHASE_1_CHECKLIST.md         ← Tasks for Week 1-2
@@ -52,7 +52,7 @@ project-01-financial-sentiment/
 │   └── processed/               ← Cleaned data after preprocessing
 │
 ├── notebooks/
-│   ├── 01_eda_financial_data.ipynb          ← Your first notebook
+│   ├── 01_eda_feedback_data.ipynb           ← Your first notebook
 │   ├── 02_dataset_analysis_bias.ipynb
 │   ├── 03_model_training.ipynb
 │   └── 04_evaluation_ablation.ipynb

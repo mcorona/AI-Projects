@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="financial-sentiment-analyzer",
+    name="customer-feedback-nlp-system",
     version="1.0.0",
-    description="Enterprise-grade sentiment analysis for financial texts",
+    description="Production-grade NLP/ML system for customer feedback analysis",
     author="Manuel Corona",
     author_email="manuel.corona@gmail.com",
     packages=find_packages(),
@@ -33,8 +33,10 @@ setup(
     },
     classifiers=[
         "Development Status :: 4 - Beta",
-        "Intended Audience :: Financial and Insurance Industry",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Customer Service/Support",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Text Processing :: Linguistic",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
     ],

@@ -1,36 +1,37 @@
-# Financial Sentiment Analysis with Fine-tuned Transformers
+# Customer Feedback NLP/ML System - Production-Grade
 
 ## 📊 Project Overview
 
-An enterprise-grade sentiment analysis system for financial texts (earnings calls, news articles, investor reports). Designed to detect nuanced emotional tones critical for quantitative finance and investment decisions.
+An enterprise-grade NLP/ML system for analyzing customer feedback across multiple sources (reviews, surveys, support tickets, social media). Designed to extract sentiment, emotions, and actionable insights for business decision-making.
 
 **Key Capabilities:**
-- Fine-tuned RoBERTa model for financial domain
-- Multi-class emotion detection (Positive, Neutral, Negative, Mixed)
+- Fine-tuned RoBERTa model for customer feedback domain
+- Multi-class sentiment detection (Positive, Neutral, Negative, Mixed)
+- Aspect-based sentiment analysis (product features)
 - Bias analysis and fairness metrics
-- Cross-dataset evaluation (domain shift analysis)
+- Cross-domain evaluation (reviews, surveys, tickets)
 - Production-ready inference API with confidence scores
 - Comprehensive error analysis and interpretability
 
-**Target Audience:** Quant funds, fintech companies, risk management teams
+**Target Audience:** E-commerce platforms, SaaS companies, customer success teams, product management
 
 ---
 
 ## 📁 Project Structure
 
 ```
-project-01-financial-sentiment/
+project-01-customer-feedback-nlp/
 ├── data/
 │   ├── raw/                    # Original datasets
-│   │   ├── financial_phrasebank/
-│   │   ├── sentiment_140/
-│   │   └── earnings_call_data/
+│   │   ├── customer_reviews/
+│   │   ├── survey_responses/
+│   │   └── support_tickets/
 │   └── processed/              # Cleaned, tokenized data
 │       ├── train.parquet
 │       ├── val.parquet
 │       └── test.parquet
 ├── notebooks/
-│   ├── 01_eda_financial_data.ipynb      # Exploratory analysis
+│   ├── 01_eda_feedback_data.ipynb       # Exploratory analysis
 │   ├── 02_dataset_analysis_bias.ipynb   # Bias detection
 │   ├── 03_model_training.ipynb          # Training pipeline
 │   └── 04_evaluation_ablation.ipynb     # Results & ablation studies
@@ -68,17 +69,17 @@ project-01-financial-sentiment/
 ## 🎯 Core Objectives
 
 ### Objective 1: Domain-Specific Model
-- Fine-tune RoBERTa on financial texts
+- Fine-tune RoBERTa on customer feedback texts
 - Outperform general-purpose sentiment models
-- Handle financial jargon and context
+- Handle diverse feedback contexts (products, services, support)
 
 ### Objective 2: Rigorous Evaluation
-- Cross-validation with temporal splits (time-series bias prevention)
+- Cross-validation with stratified splits
 - Multiple metrics: Accuracy, F1 (weighted), Precision, Recall, AUROC
 - Comparison vs. baselines (TextBlob, DistilBERT, VADER)
 
 ### Objective 3: Bias & Fairness Analysis
-- Subgroup analysis (by company sector, news source, time period)
+- Subgroup analysis (by product type, customer segment, feedback source)
 - Disparate impact analysis
 - Error rate parity across demographic groups
 
@@ -115,20 +116,20 @@ project-01-financial-sentiment/
 
 ## 📊 Datasets
 
-### Primary: FinancialPhraseBank
-- **Size:** 4,840 sentences from financial news
+### Primary: Customer Feedback Corpus
+- **Size:** 5,000+ customer feedback samples
 - **Labels:** Positive, Negative, Neutral (3-class)
-- **Source:** Malo et al. (2014)
+- **Sources:** Product reviews, surveys, support tickets
 - **Preprocessing:** Lowercase, special char handling, stop words
 
-### Secondary: SentiCorp (Earnings Calls)
-- **Size:** 2,000+ earnings call sentences
+### Secondary: Multi-Source Feedback
+- **Size:** 2,000+ samples across multiple platforms
 - **Labels:** Expert-annotated sentiment
-- **Relevance:** Domain-specific financial language
+- **Relevance:** Domain-specific customer language
 - **Split:** Train/Val/Test (70/15/15)
 
-### Evaluation: Financial Phrase Bank test set
-- **Size:** 1,210 sentences
+### Evaluation: Cross-Domain Test Set
+- **Size:** 1,000+ samples from diverse feedback sources
 - **Purpose:** Out-of-domain generalization testing
 - **Metrics:** Cross-dataset performance, domain shift analysis
 
@@ -235,7 +236,7 @@ project-01-financial-sentiment/
 
 ```bash
 # 1. Clone and navigate
-cd project-01-financial-sentiment
+cd project-01-customer-feedback-nlp
 
 # 2. Install dependencies
 pip install -r requirements.txt
@@ -244,7 +245,7 @@ pip install -r requirements.txt
 python src/data/loader.py --download-all
 
 # 4. Run exploratory analysis
-jupyter notebook notebooks/01_eda_financial_data.ipynb
+jupyter notebook notebooks/01_eda_feedback_data.ipynb
 
 # 5. Train model
 python -m src.models.train --config configs/training_config.yaml
@@ -260,10 +261,10 @@ streamlit run app.py
 
 ## 📚 References
 
-- **FinancialPhraseBank:** [Malo et al., 2014](https://www.researchgate.net/publication/260063683_FinancialPhraseBank-a_new_corpus_for_phrase_level_sentiment_analysis)
 - **RoBERTa:** [Liu et al., 2019](https://arxiv.org/abs/1907.11692)
 - **Fine-tuning Guide:** [HuggingFace Documentation](https://huggingface.co/docs/transformers/)
 - **Fairness in ML:** [Fairness Indicators](https://github.com/tensorflow/fairness-indicators)
+- **Sentiment Analysis Survey:** [Natural Language Processing for Sentiment Analysis](https://arxiv.org/abs/1801.07883)
 
 ---
 
