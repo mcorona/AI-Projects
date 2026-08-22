@@ -1,0 +1,72 @@
+# Training Configuration for Financial Sentiment Analysis
+
+# Model Configuration
+model:
+  model_name: "roberta-base"  # Pre-trained model from HuggingFace
+  num_classes: 3              # Positive, Neutral, Negative
+  max_length: 128             # Maximum token length
+  dropout: 0.1
+  hidden_dropout_prob: 0.1
+  attention_probs_dropout_prob: 0.1
+
+# Data Configuration
+data:
+  train_path: "data/processed/train.parquet"
+  val_path: "data/processed/val.parquet"
+  test_path: "data/processed/test.parquet"
+  batch_size: 32
+  num_workers: 4
+  test_batch_size: 64
+
+# Training Configuration
+training:
+  epochs: 5
+  learning_rate: 2e-5
+  weight_decay: 0.01
+  warmup_steps: 500
+  gradient_accumulation_steps: 1
+  max_grad_norm: 1.0
+
+# Optimizer
+optimizer:
+  type: "AdamW"  # AdamW for transformer fine-tuning
+  betas: [0.9, 0.999]
+  eps: 1e-8
+
+# Learning Rate Scheduler
+scheduler:
+  type: "linear"  # linear, cosine, cosine_with_restarts
+  num_warmup_steps: 500
+  num_training_steps: 15000  # Approx: (train_samples / batch_size) * epochs
+
+# Data Augmentation
+augmentation:
+  use_backtranslation: false  # Optional: EDA augmentation
+  backtranslation_prob: 0.1
+  use_paraphrase: false
+  paraphrase_prob: 0.15
+
+# Regularization
+regularization:
+  dropout: 0.1
+  layer_dropout: false
+  label_smoothing: 0.1
+
+# Validation & Checkpointing
+validation:
+  eval_every_n_steps: 200
+  save_every_n_steps: 500
+  early_stopping_patience: 3
+  early_stopping_metric: "val_f1_weighted"  # metric to monitor
+  early_stopping_mode: "max"  # max for F1, min for loss
+
+# Logging & Tracking
+logging:
+  use_mlflow: true
+  mlflow_experiment: "financial-sentiment"
+  log_every_n_steps: 50
+  log_predictions: true
+  num_predictions_to_log: 100
+
+# Seed for reproducibility
+seed: 42
