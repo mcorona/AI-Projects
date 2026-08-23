@@ -19,7 +19,7 @@ Plus two naive baselines (persistence, seasonal-naive) that turned out to be com
 
 ## Training Data
 
-- **Source:** NSE (India) daily OHLCV data for 63 symbols, 2000-2021, sourced from a public GitHub mirror (Yahoo Finance/Alpha Vantage/Stooq are blocked by this project's dev sandbox network policy -- see `PHASE_1_SUMMARY.md`-equivalent notes in `notebooks/01_eda.ipynb`).
+- **Source:** NSE (India) daily OHLCV data for 63 symbols, 2000-2021, sourced from a public GitHub mirror (Yahoo Finance/Alpha Vantage/Stooq are blocked by this project's dev sandbox network policy -- see the data-sourcing notes in `notebooks/01_eda.ipynb` and `README.md`'s "Data Source" section).
 - **Series used:** RELIANCE (Reliance Industries), 5,306 trading days, 2000-01-03 to 2021-04-30.
 - **Known data issue found and fixed:** the raw data has no split-adjusted price column. Two near-exact -50% single-day drops (2009-11-26, 2017-09-07) were identified as unadjusted stock splits/bonus issues and corrected; four other large single-day moves were deliberately left untouched because they match real, documented market events (2004/2009 Indian election swings, the Oct 2008 financial crisis, a likely 2006 demerger) -- see `src/data/loader.py`.
 - **Split:** chronological 70/15/15 (train through 2014-11-24, val through 2018-02-06, test through 2021-04-30). Never shuffled -- a random split would leak future prices into training.
