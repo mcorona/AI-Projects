@@ -1,0 +1,32 @@
+# Local environment
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Version control
+.git/
+.gitignore
+
+# Data & model artifacts -- mount these as volumes at runtime instead of
+# baking them into the image (see Dockerfile). Keeps the image small and
+# lets you swap checkpoints without rebuilding.
+data/
+output/models/
+*.ckpt
+*.pt
+*.pth
+
+# Notebooks & docs (not needed to serve the API)
+notebooks/
+.ipynb_checkpoints/
+*.md
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
