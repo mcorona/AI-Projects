@@ -1,0 +1,86 @@
+{
+  "TextBlob": {
+    "accuracy": 0.5618131868131868,
+    "precision_weighted": 0.5415848249713865,
+    "recall_weighted": 0.5618131868131868,
+    "f1_weighted": 0.547037937514862,
+    "f1_per_class": {
+      "negative": 0.32098765432098764,
+      "neutral": 0.6759656652360515,
+      "positive": 0.3756906077348066
+    },
+    "confusion_matrix": [
+      [
+        26,
+        56,
+        9
+      ],
+      [
+        37,
+        315,
+        80
+      ],
+      [
+        8,
+        129,
+        68
+      ]
+    ]
+  },
+  "TF-IDF + SVM": {
+    "accuracy": 0.7541208791208791,
+    "precision_weighted": 0.7488804270822791,
+    "recall_weighted": 0.7541208791208791,
+    "f1_weighted": 0.7476288883999386,
+    "f1_per_class": {
+      "negative": 0.6936416184971098,
+      "neutral": 0.8205689277899344,
+      "positive": 0.6178861788617886
+    },
+    "confusion_matrix": [
+      [
+        60,
+        22,
+        9
+      ],
+      [
+        16,
+        375,
+        41
+      ],
+      [
+        6,
+        85,
+        114
+      ]
+    ]
+  },
+  "DistilBERT (no fine-tune)": {
+    "accuracy": 0.31043956043956045,
+    "precision_weighted": 0.5607284580498866,
+    "recall_weighted": 0.31043956043956045,
+    "f1_weighted": 0.21693154004846957,
+    "f1_per_class": {
+      "negative": 0.37267080745341613,
+      "neutral": 0.06622516556291391,
+      "positive": 0.4653846153846154
+    },
+    "confusion_matrix": [
+      [
+        90,
+        0,
+        1
+      ],
+      [
+        224,
+        15,
+        193
+      ],
+      [
+        78,
+        6,
+        121
+      ]
+    ]
+  }
+}
