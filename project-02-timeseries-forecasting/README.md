@@ -8,6 +8,22 @@ A forecasting system comparing three fundamentally different approaches on the s
 
 ---
 
+## 📈 Results
+
+Final one-step-ahead evaluation on the held-out test set (2018-02-07 to 2021-04-30, includes the March 2020 COVID crash):
+
+| Model | MAPE |
+|---|---|
+| Persistence (naive) | 1.48% |
+| **ARIMA(2,1,5)** | **1.48%** |
+| **LSTM (log returns)** | **1.48%** |
+| Seasonal-naive | 3.48% |
+| Prophet (5-day-ahead rolling) | 10.67% |
+
+**Headline finding:** for one-day-ahead forecasting of a liquid single stock, model sophistication was not the bottleneck. Persistence, ARIMA, and a correctly-specified LSTM all land at the same ~1.48% MAPE ceiling -- including through a real market crash. Along the way, test-set evaluation caught a genuine bug: an LSTM trained on raw price level collapsed to 20.18% MAPE on test because the price moved far outside its training range; retraining on log returns (scale-invariant) fixed it completely. Full writeup: `MODEL_CARD.md`, and the notebooks in `notebooks/`.
+
+---
+
 ## 🎯 Core Objectives
 
 1. **Proper time-series methodology**: chronological train/val/test split (no shuffling), stationarity testing, seasonal decomposition -- not just "fit a model and report a number."
@@ -44,25 +60,29 @@ On a machine with normal internet access, the equivalent real-time data is trivi
 
 ## 🚀 Development Plan
 
-### Phase 1: EDA & Baselines
-- Load and validate the raw series; build a clean daily-indexed DataFrame
-- Seasonal decomposition (trend / seasonality / residual)
-- Stationarity testing (ADF test), autocorrelation (ACF/PACF) analysis
-- Chronological train/val/test split
-- Naive baselines (last-value / seasonal-naive) to establish a floor to beat
+### Phase 1: EDA & Baselines -- Complete
+- Data quality checks, unadjusted-split detection and correction (see `MODEL_CARD.md`)
+- Seasonal decomposition (trend / seasonality / residual): trend-dominated, weak seasonality
+- Stationarity testing (ADF), ACF/PACF analysis: price non-stationary, returns stationary
+- Chronological 70/15/15 train/val/test split
+- Naive baselines (persistence, seasonal-naive) -- persistence proved a very strong floor
 
-### Phase 2: Model Training
-- ARIMA/SARIMA (order selection via ACF/PACF + `auto_arima`-style search)
-- Prophet (with trend changepoints, seasonality)
-- LSTM (windowed sequences, trained on the same chronological split)
+### Phase 2: Model Training -- Complete
+- ARIMA (AIC-based order search: (2,1,5)), one-step-ahead via Kalman filter re-conditioning
+- Prophet (changepoint-prior-scale search, weekly-refit rolling forecast)
+- LSTM (30-day lookback window, one-step-ahead, chronological validation split)
 
-### Phase 3: Evaluation & Comparison
-- MAE / RMSE / MAPE for all 3 models on the same held-out test period
-- Residual analysis: where does each model fail (trend breaks, volatility spikes)?
-- Comparison table + plots (actual vs. predicted for each model)
+### Phase 3: Evaluation & Comparison -- Complete
+- Final test-set MAE/RMSE/MAPE for all models (see Results above)
+- Found and fixed a real LSTM scaling bug via test-set evaluation (see `MODEL_CARD.md`)
+- Regime analysis (pre-COVID / crash / recovery) and a COVID-crash zoom plot
 
-### Phase 4: Dashboard
-- Streamlit + Plotly interactive app: pick a date range, compare model forecasts visually
+### Phase 4: Dashboard -- Complete
+- `app.py`: Streamlit + Plotly interactive app with 3 tabs (forecast explorer, model comparison, COVID crash case study)
+
+### Phase 5: Deployment -- Complete
+- Dockerized dashboard (`Dockerfile`, minimal `requirements-dashboard.txt`)
+- `MODEL_CARD.md` with scope, limitations, and known failure modes
 
 ---
 
@@ -74,8 +94,26 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-# Data is fetched during Phase 1 (see notebooks/01_eda.ipynb for the exact source)
-jupyter notebook notebooks/01_eda.ipynb
+# Get the dataset and build the chronological train/val/test splits
+mkdir -p data/raw/nse_stocks
+curl -L https://raw.githubusercontent.com/dheeraj5988/stock_market_dataset/main/combined_stock_data.csv \
+  -o data/raw/nse_stocks/combined_stock_data.csv
+python -m src.data.loader
+
+# Run the notebooks in order -- each one generates the artifacts the next needs
+jupyter nbconvert --to notebook --execute --inplace notebooks/01_eda.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/02_model_training.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/03_evaluation.ipynb
+
+# Explore the dashboard
+streamlit run app.py
+
+# Or run the dashboard in Docker
+docker build -t reliance-forecast-dashboard .
+docker run -p 8501:8501 \
+  -v "$(pwd)/data/processed:/app/data/processed" \
+  -v "$(pwd)/output/reports:/app/output/reports" \
+  reliance-forecast-dashboard
 ```
 
 ---
