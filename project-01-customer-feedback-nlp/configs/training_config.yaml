@@ -34,10 +34,13 @@ optimizer:
   eps: 1e-8
 
 # Learning Rate Scheduler
+# NOTE: num_warmup_steps/num_training_steps below are informational only.
+# src/models/train.py computes the real schedule from the actual dataset
+# size and batch_size, then caps warmup_steps at training.warmup_steps.
 scheduler:
   type: "linear"  # linear, cosine, cosine_with_restarts
   num_warmup_steps: 500
-  num_training_steps: 15000  # Approx: (train_samples / batch_size) * epochs
+  num_training_steps: 15000  # Approx for a much larger corpus than ours
 
 # Data Augmentation
 augmentation:
