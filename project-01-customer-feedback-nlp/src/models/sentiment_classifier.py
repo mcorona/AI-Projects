@@ -234,7 +234,10 @@ class SentimentInference:
             device: Device to use (cuda or cpu)
         """
         self.device = device
-        self.model = FinancialSentimentClassifier.load_from_checkpoint(model_path)
+        # weights_only=False: PyTorch >=2.6 defaults torch.load to weights_only=True,
+        # which rejects the pickled ModelConfig dataclass saved via save_hyperparameters().
+        # Safe here since we only ever load checkpoints this project trained itself.
+        self.model = FinancialSentimentClassifier.load_from_checkpoint(model_path, weights_only=False)
         self.model.to(device)
         self.model.eval()
 
