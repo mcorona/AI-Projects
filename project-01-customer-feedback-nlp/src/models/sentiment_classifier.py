@@ -237,7 +237,14 @@ class SentimentInference:
         # weights_only=False: PyTorch >=2.6 defaults torch.load to weights_only=True,
         # which rejects the pickled ModelConfig dataclass saved via save_hyperparameters().
         # Safe here since we only ever load checkpoints this project trained itself.
-        self.model = FinancialSentimentClassifier.load_from_checkpoint(model_path, weights_only=False)
+        #
+        # map_location="cpu": loading straight onto an MPS device hits a PyTorch/MPS
+        # bug ("Unaligned blit request" in aten Copy.mm) on checkpoints saved from
+        # an MPS training run. Loading to CPU first and moving to the target device
+        # afterward via .to(device) avoids the buggy direct-to-MPS copy path.
+        self.model = FinancialSentimentClassifier.load_from_checkpoint(
+            model_path, map_location="cpu", weights_only=False
+        )
         self.model.to(device)
         self.model.eval()
 
