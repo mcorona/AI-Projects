@@ -103,9 +103,22 @@ def main():
     with open("output/reports/roberta_errors.json", "w") as f:
         json.dump(wrong, f, indent=2)
 
+    # --- Full per-example predictions (all 728, not just errors) ---
+    # Consumed by src/evaluation/error_analysis.py so it doesn't need to
+    # reload the model / re-run inference.
+    predictions_df = pd.DataFrame({
+        "text": test_df["text"].tolist(),
+        "true": y_true,
+        "pred": y_pred,
+        "confidence": confidences,
+        "correct": [t == p for t, p in zip(y_true, y_pred)],
+    })
+    predictions_df.to_csv("output/reports/roberta_test_predictions.csv", index=False)
+
     print("\nSaved: output/figures/roberta_confusion_matrix.png")
     print("Saved: output/reports/roberta_eval_results.json")
     print("Saved: output/reports/roberta_errors.json")
+    print("Saved: output/reports/roberta_test_predictions.csv")
 
 
 if __name__ == "__main__":
