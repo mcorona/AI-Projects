@@ -1,0 +1,35 @@
+# Local environment
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Version control
+.git/
+.gitignore
+
+# Data & model artifacts -- mount these as volumes at runtime instead of
+# baking them into the image (see Dockerfile). The dashboard only reads
+# them, it doesn't regenerate them.
+data/
+output/models/
+output/reports/
+*.parquet
+*.csv
+*.h5
+*.keras
+*.pkl
+
+# Notebooks & docs (not needed to serve the dashboard)
+notebooks/
+.ipynb_checkpoints/
+*.md
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
