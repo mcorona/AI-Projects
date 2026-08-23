@@ -31,9 +31,11 @@ pyyaml>=6.0.0
 # required even for Phase 1 (data-only) work that imports from src.*
 pytorch-lightning>=2.1.0
 
-# Phase 2+ (uncomment when needed)
+# Phase 4: API & demo
+fastapi>=0.109.0
+uvicorn>=0.27.0
+
+# Phase 4+ (uncomment when needed)
 # plotly>=5.18.0
-# fastapi>=0.109.0
-# uvicorn>=0.27.0
 # streamlit>=1.29.0
 # mlflow>=2.10.0
