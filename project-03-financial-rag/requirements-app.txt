@@ -1,0 +1,11 @@
+# Minimal subset needed to serve app.py. The app only reads precomputed
+# artifacts (embeddings, retrieval runs, eval reports) plus the dense
+# encoder for live queries -- it never re-indexes the corpus or re-runs an
+# evaluation, so BM25, Jupyter, matplotlib and pytest are all left out.
+numpy>=1.24.0
+pandas>=2.0.0
+sentence-transformers>=3.0.0
+torch>=2.2.0
+anthropic>=0.40.0
+pydantic>=2.0.0
+streamlit>=1.29.0
