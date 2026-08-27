@@ -140,14 +140,14 @@ the system.
 | **Dense retrieval** | sentence-transformers (bge-base, MiniLM) | Bi-encoder semantic search |
 | **Reranking** | Cross-encoders (ms-marco, bge-reranker) | Second-stage precision — measured, not assumed |
 | **Fusion** | Reciprocal Rank Fusion | Scale-free combination, one constant, no tuning knob |
-| **Vector search** | NumPy matmul | 57k × 768 is 88 MB; exhaustive search is milliseconds and exact |
+| **Vector search** | NumPy matmul | 57k × 768 is 169 MB; exhaustive search is milliseconds and exact |
 | **Generation & judging** | Anthropic Claude (`claude-opus-5`) | Structured outputs for mechanically parseable verdicts |
 | **Cost control** | Message Batches API | 50% pricing on an evaluation nothing is waiting for |
 | **Significance** | Paired bootstrap (NumPy) | 648 queries can't resolve every gap; this says which |
 | **Dashboard** | Streamlit | Live retrieval + both benchmark tables |
 
-Why no vector database: at 57,638 × 768 the embedding matrix is 88 MB and
-an exhaustive cosine search takes milliseconds. FAISS or a hosted vector DB
+Why no vector database: at 57,638 × 768 float32 the embedding matrix is
+169 MB and an exhaustive cosine search takes milliseconds. FAISS or a hosted vector DB
 would add a dependency, an index-build step, and an approximate-recall
 tradeoff to solve a problem this corpus does not have. That decision would
 flip at ~10M documents.
@@ -194,8 +194,8 @@ python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-The FiQA dataset (~60 MB) downloads itself on first use — no manual step,
-no Kaggle account:
+The FiQA dataset (a 17 MB download, 47 MB extracted) fetches itself on
+first use — no manual step, no Kaggle account:
 
 ```bash
 python -m src.data.loader

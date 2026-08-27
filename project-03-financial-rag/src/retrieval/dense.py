@@ -5,10 +5,11 @@ Embeddings are cached to data/processed/ keyed by model name, because
 encoding the 57,638-document FiQA corpus is the slowest step in the
 pipeline and nothing about it changes between evaluation runs.
 
-Similarity search is a plain normalized matmul rather than FAISS: at 57k x
-384 the index is ~88 MB and an exhaustive search takes milliseconds, so an
-approximate index would add a dependency and a recall/speed tradeoff to
-solve a problem this corpus does not have.
+Similarity search is a plain normalized matmul rather than FAISS: the 57k
+corpus is 84 MB at 384 dimensions and 169 MB at 768, and an exhaustive
+search over either takes milliseconds. An approximate index would add a
+dependency and a recall/speed tradeoff to solve a problem this corpus does
+not have; that call would flip at roughly 10M documents.
 
 Author: Manuel Corona
 """

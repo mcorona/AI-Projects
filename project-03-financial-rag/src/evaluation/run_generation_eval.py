@@ -304,6 +304,7 @@ def phase_analyze(queries, corpus, qrels):
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     (REPORTS_DIR / "generation_metrics.json").write_text(json.dumps(report, indent=2))
+    _write_samples(records, correct, ground, qrels)
 
     print(f"\n=== Answer quality, N={N_QUESTIONS} FiQA test questions ===")
     hdr = f"{'condition':14s} {'correct':>8s} {'+partial':>9s} {'grounded':>9s} " \
@@ -321,6 +322,37 @@ def phase_analyze(queries, corpus, qrels):
     print(f"judge vs {CROSS_JUDGE_MODEL}: {cal['cross_model']}")
     print(f"estimated cost: {costs}")
     print(f"\nwrote {(REPORTS_DIR / 'generation_metrics.json').relative_to(ROOT)}")
+
+
+def _write_samples(records, correct, ground, qrels, per_verdict: int = 3):
+    """
+    Commit a readable sample of answers alongside the aggregate numbers.
+
+    A table of percentages is not inspectable. These samples let a reader
+    check the judge's calls themselves -- including the ones it got wrong,
+    which is the point of publishing them rather than the three prettiest.
+    """
+    buckets = defaultdict(list)
+    for key, rec in records.items():
+        ans, verdict = rec["answer"], (correct.get(key) or {}).get("verdict")
+        if not ans or not verdict:
+            continue
+        buckets[verdict].append({
+            "condition": rec["condition"],
+            "question": rec["question"],
+            "answer": ans["answer"],
+            "citations": ans["citations"],
+            "context_sufficient": ans["context_sufficient"],
+            "gold_passages_in_context": sum(
+                1 for d in rec["context_ids"] if d in qrels[rec["qid"]]),
+            "judge_correctness": verdict,
+            "judge_correctness_reason": correct[key]["reasoning"],
+            "judge_groundedness": (ground.get(key) or {}).get("verdict"),
+        })
+    samples = {v: sorted(items, key=lambda r: r["question"])[:per_verdict]
+               for v, items in sorted(buckets.items())}
+    (REPORTS_DIR / "answer_samples.json").write_text(json.dumps(samples, indent=2))
+    print(f"wrote answer_samples.json ({sum(len(v) for v in samples.values())} examples)")
 
 
 def main():
