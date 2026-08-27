@@ -1,0 +1,12 @@
+# Minimal dependencies to serve app.py -- a subset of requirements.txt.
+# Used by the Dockerfile so the dashboard image doesn't ship TensorFlow,
+# Prophet, statsmodels, Jupyter, etc. -- the dashboard only reads
+# precomputed parquet/JSON artifacts, it never retrains a model.
+# Keep these versions in sync with requirements.txt.
+
+streamlit>=1.29.0
+plotly>=5.18.0
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+pyarrow>=14.0.0

@@ -1,0 +1,674 @@
+[
+  {
+    "text": "A & euro ; 4.8 million investment in 13.6 % of Lewa netted Deutsche Beteiligungs & euro ; 21 million .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9877184629440308
+  },
+  {
+    "text": "This bold spinning 360 red fabric design is set beautifully on Ercols Napoli sofa .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9867005944252014
+  },
+  {
+    "text": "`` Rapala is excited to be partnering with RBFF and other industry leaders on this holiday promotion . ''",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9812088012695312
+  },
+  {
+    "text": "The StoneGate UTM solution offers protection against inbound and outbound attacks .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9761431217193604
+  },
+  {
+    "text": "However , he expects banks to provide alternative financing .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9751634001731873
+  },
+  {
+    "text": "Garmin fell 4.5 percent to $ 34.53 at 1:33 p.m. in New York , while Google slid 0.7 percent at $ 576.50 .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.9733124375343323
+  },
+  {
+    "text": "A new Kveyt light variety of Suomalainen Pekoni marketed under the Atria brand name is now available to consumers in Finland .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9721531271934509
+  },
+  {
+    "text": "Previously , it projected the figure to be slightly lower than in 2009 .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.9710912704467773
+  },
+  {
+    "text": "The decision to sell a share in Lenenergo was reached in line with Fortum 's strategic plans to invest mainly in generating assets in Russia , while Lenenergo is a grid company , the press release said .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9643226265907288
+  },
+  {
+    "text": "Certain shareholders have irrevocably agreed to vote in favor of the bond issue .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9641291499137878
+  },
+  {
+    "text": "Jobs will not be transferred from Finland , however .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9640340805053711
+  },
+  {
+    "text": "TomTom has given assurances that it will continue to sell maps to competitors if it wins EU approval .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9595335721969604
+  },
+  {
+    "text": "According to Schmardin , Nordea will most likely try to win customers over from other pension fund providers .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9549378752708435
+  },
+  {
+    "text": "Expense ratio was 102.6 % compared to 92.9 % in the corresponding period in 2005 .",
+    "true": "negative",
+    "pred": "positive",
+    "confidence": 0.9547295570373535
+  },
+  {
+    "text": "Operating loss increased to EUR 17mn from a loss of EUR 10.8 mn in 2005 .",
+    "true": "negative",
+    "pred": "positive",
+    "confidence": 0.9451523423194885
+  },
+  {
+    "text": "With this subscription , Fortum 's ownership in TGK-10 has increased to slightly over 76 % of shares and voting rights .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9367709755897522
+  },
+  {
+    "text": "The agreement with JM is one in a series of contracts that TeliaSonera has signed in recent months with residential construction and real estate management companies in Sweden .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9356928467750549
+  },
+  {
+    "text": "Ixonos estimates that it will hire 20 specialists in mechanical engineering , electronics design , and R&D for its new unit in Jyvaeskylae by the end of 2009 .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9353736042976379
+  },
+  {
+    "text": "We are also pleased to welcome the new employees to Tieto . '",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9328213930130005
+  },
+  {
+    "text": "Elisa will expand the use of this technology provided the pilot proves successful .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9293211102485657
+  },
+  {
+    "text": "Bioheapleaching makes extraction of metals from low grade ore economically viable .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9272258877754211
+  },
+  {
+    "text": "Operating profit for the 12-month period decreased from EUR9 .6 m while net sales increased from EUR69 .0 m , as compared to 2005 .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.9264600276947021
+  },
+  {
+    "text": "The reduction notice applied to 17 people .",
+    "true": "negative",
+    "pred": "neutral",
+    "confidence": 0.9249506592750549
+  },
+  {
+    "text": "According to Olvi , the company is already negotiating new agreements .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9134761095046997
+  },
+  {
+    "text": "The poorest index figure was given to Finnish power company Fortum , 4.5 .",
+    "true": "negative",
+    "pred": "neutral",
+    "confidence": 0.9127744436264038
+  },
+  {
+    "text": "TietoEnator signed an agreement to acquire Indian research and development ( R&D ) services provider and turnkey software solutions developer Fortuna Technologies Pvt. Ltd. for 21 mln euro ( $ 30.3 mln ) in September 2007 .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9108009338378906
+  },
+  {
+    "text": "Airbus has 100 firm orders for the A350 and 89 nonbinding commitments .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9100643396377563
+  },
+  {
+    "text": "The effect of the savings will be noticeable as of the beginning of 2010 .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.9061748385429382
+  },
+  {
+    "text": "`` We will continue to make it easier for users to explore services on their handsets and will work towards bringing Internet to a wider range of devices including mid and low-end devices , '' said Kallasvuo .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9037030339241028
+  },
+  {
+    "text": "`` Korean consumers are tech-savvy and leading the pack in terms of design , '' Gill Hyun-chang , president of Motorola Korea Inc. , told Dow Jones Newswires in an interview .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9009313583374023
+  },
+  {
+    "text": "Pre-tax loss totaled EUR 0.3 mn , compared to a loss of EUR 2.2 mn in the first quarter of 2005 .",
+    "true": "positive",
+    "pred": "negative",
+    "confidence": 0.9004113078117371
+  },
+  {
+    "text": "Technopolis , St. Petersburg 's Telecommunications University and the Russian Support Fund for Legislative Initiatives signed a protocol of intent in May of this year to set up a technopark in St. Petersburg on the base of the St. Petersburg Telecommunications University .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.9000007510185242
+  },
+  {
+    "text": "` It is a testament to the quality of our LTE solution and our commitment to the Japanese market ' , he added .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.8960773348808289
+  },
+  {
+    "text": "Neste Oil extended yesterday 's gains and put on 0.49 pct to 22.72 eur , while utility Fortum shed 1.14 pct to 20.76 eur .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.8947961926460266
+  },
+  {
+    "text": "It is the first oil company to join RSPO and commits fully to sustainable sourcing of feedstocks for the production of its NExBTL biodiesel , it said .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.8927706480026245
+  },
+  {
+    "text": "Among other industrial stocks , Metso added 0.53 pct to 40.04 eur , Wartsila B was down 0.77 pct at 47.87 eur and Rautaruukki K was 1.08 pct lower at 37.56 eur .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.887190580368042
+  },
+  {
+    "text": "In November , the Finnish government decreased its ownership in the company further to 31.1 percent from 38 percent .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.8848215937614441
+  },
+  {
+    "text": "Last year , Lemminkainen completed the Kouvola K-supermarket contract .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8836671710014343
+  },
+  {
+    "text": "Following the impact , the Altima hit a utility pole , causing a live electric line to fall onto the roadway .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.8806093335151672
+  },
+  {
+    "text": "The shopping center will have a prime location right next to the Myllypuro metro station .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8728535771369934
+  },
+  {
+    "text": "Because expenditures must be justified to pass budget approval hurdles , we believe our RoP model can help make it easier for IT and IT security practitioners to make the business case for acquiring enabling security technologies and related control activities .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.8702275156974792
+  },
+  {
+    "text": "Kaido Kaare , general director for Atria Eesti , says the company 's investments in the upgrade of the pig farms surpass EEK 150mn EUR 9.59 mn USD 14.19 mn in the past years .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8680288195610046
+  },
+  {
+    "text": "The current lay-offs are additional to the temporary lay-offs agreed in December 2008 and in May 2009 .",
+    "true": "negative",
+    "pred": "neutral",
+    "confidence": 0.854944109916687
+  },
+  {
+    "text": "ADPnews - Jun 30 , 2009 - Finnish stainless steel maker Outokumpu Oyj HEL : OUT1V said yesterday it signed a three-year EUR 900 million USD 1.3 bn revolving credit facility .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8523304462432861
+  },
+  {
+    "text": "However , Simdax will remain available in the markets where it already has been approved as it has marketing authorisations or submitted applications in more than 40 countries , Orion added .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.852157711982727
+  },
+  {
+    "text": "The company is also featured in the Ethibel Pioneer Investment Register and included in Innovest 's Global 100 list of the world 's most sustainable corporations .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8505662679672241
+  },
+  {
+    "text": "The terms of the financing were approved by the Annual General Meeting of the Company held on June 30 , 2010 .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8399443030357361
+  },
+  {
+    "text": "A maximum of 20 employees , who work in Karttakeskus and are responsible for producing Geographic Information Services , will be affected , the company added .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.8350428342819214
+  },
+  {
+    "text": "The negotiations were carried out in a constructive manner , and all parties tried to find a solution to the situation .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.827708899974823
+  },
+  {
+    "text": "In addition to the Indian market , the new plant will serve Salcomp 's customers globally , the company said .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.82692950963974
+  },
+  {
+    "text": "In the end of 2006 , the number of outlets will rise to 60-70 .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8241897225379944
+  },
+  {
+    "text": "Xerox and Stora Enso have teamed up to tailor the iGen3 to the short-run , on-demand packaging market .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8207294940948486
+  },
+  {
+    "text": "Mr Kivimeister said John Deer former Timberjack stands to win in the situation : it controls around 60 % of Estonia 's forest machinery market .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.818027675151825
+  },
+  {
+    "text": "In contrast , the company 's net loss for the third quarter of 2009 contracted to EUR 76 million from EUR 256 million for the corresponding period a year ago .",
+    "true": "positive",
+    "pred": "negative",
+    "confidence": 0.8135554790496826
+  },
+  {
+    "text": "According to Olvi 's Managing Director Lasse Aho , the company has an ongoing MMX Plus project that aims to find growth outside Finland .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8123781085014343
+  },
+  {
+    "text": "The CL51 is designed to measure cloud base height and vertical visibility in all weather conditions , which makes it an ideal instrument for meteorological applications that rely on reliable cloud height detection .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8123348951339722
+  },
+  {
+    "text": "( ADP News ) - Nov 3 , 2008 - Finnish cargo handling systems and services company Cargotec Oyj ( OMX : CGCBV ) said today that it acquired 80 % stakes in Italian service companies CVS Technoports Srl and CVS Service Srl from Italian handli",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.8074672818183899
+  },
+  {
+    "text": "It said Comptel delivers reliable provisioning and activation solutions which improve fulfilment processes for operators .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.8011506199836731
+  },
+  {
+    "text": "A tinyurl link takes users to a scamming site promising that users can earn thousands of dollars by becoming a Google ( NASDAQ : GOOG ) Cash advertiser .",
+    "true": "negative",
+    "pred": "neutral",
+    "confidence": 0.7953054308891296
+  },
+  {
+    "text": "Other measures included increasing synergies and economies of scale within the Grimaldi Group and personnel adjustments , divestments and redelivery of excess tonnage .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.7949180006980896
+  },
+  {
+    "text": "The contract was signed in August with Papua New Guinea-based Lihir Gold Ltd ASX : LGL .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.7926300764083862
+  },
+  {
+    "text": "Nordea Bank ( STO : NDA ) and Sampo Bank have helped Finnish real estate investment company Sponda ( HEL : SDA1V ) place a EUR100m ( USD125 .4 m ) domestic bond , the company said Friday .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.7917562127113342
+  },
+  {
+    "text": "Key shareholders of Finnish IT services provider TietoEnator Oyj on Friday rejected a hostile EUR1 .08 billion $ 1.67 billion offer from buyout shop Nordic Capital , giving new life to a possible counter offer from Blackstone Group LP and Norwegian telecom Telenor ASA .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.7766668796539307
+  },
+  {
+    "text": "As a result , a total of 82 employees would be given notice .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.768297016620636
+  },
+  {
+    "text": "The company says it is difficult to estimate the market situation for the whole year 2009 .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.7622935771942139
+  },
+  {
+    "text": "Information system supplier Sentera -- up 24.51 pct -- was the next most heavily traded share after SysOpen Digia , a software house , acquired 77.4 pct of the company this morning for just under 33 mln eur .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.7581709623336792
+  },
+  {
+    "text": "The last job losses related to these reductions will take place during 2010 .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.7564869523048401
+  },
+  {
+    "text": "To achieve synergy targets related to the acquisition , Vaisala is consolidating its manufacturing , depot and data services , and finance activities currently located in Uniontown , Pennsylvania , St. Louis , Missouri and Durham , North Carolina .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.754283607006073
+  },
+  {
+    "text": "Sony Ericsson and Nokia dominated the list of best-selling handsets with five models each .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.7513973116874695
+  },
+  {
+    "text": "- The Group -\u0093 s result before taxes was a loss of EUR 0.6 ( +0.6 ) million .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.7486275434494019
+  },
+  {
+    "text": "When cruising , the revs fall as less engine output is required .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.7460139989852905
+  },
+  {
+    "text": "The Vaisala Group is a successful international technology company that develops , manufactures and markets electronic measurement systems and products .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.744147002696991
+  },
+  {
+    "text": "In September 2010 , the Finnish group agreed to buy Danish company Rose Poultry A-S for up to EUR23 .9 m in a combination of cash and stock .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.7387399077415466
+  },
+  {
+    "text": "Laavainen said Benecol was well known in Europe and the US , where it had been in the market for 15 years .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.7374686002731323
+  },
+  {
+    "text": "Aldata noted that its Voice Supply Chain Technology approach enables VDW to integrate with warehouse management systems .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.736801028251648
+  },
+  {
+    "text": "Calls to the switchboard and directory services have decreased significantly since our employees now have up-to-date contact information from all their colleagues and customers on their phone and can place the call directly .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.7287779450416565
+  },
+  {
+    "text": "Operating loss was EUR 179mn , compared to a loss of EUR 188mn in the second quarter of 2009 .",
+    "true": "positive",
+    "pred": "negative",
+    "confidence": 0.7229126691818237
+  },
+  {
+    "text": "The talks concerned about 160 people in Finland and the initial estimate was for about 35 redundancies , Fiskars said .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.7172350287437439
+  },
+  {
+    "text": "Finnish holding company Panostaja Oyj said on June 12 , 2007 it has signed a letter of intent to acquire local Lahden Lampokasittely Oy and Heatmasters Oy , active in the heat treatment of metals , for a total 3.1 mln euro ( $ 4.1 mln ) .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.7009606957435608
+  },
+  {
+    "text": "Central Europe is an important market area for Honka .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6973623633384705
+  },
+  {
+    "text": "`` This agreement is a direct result of LCC 's strategy and plan that was announced earlier this year , '' said Dean Douglas , LCC 's chief executive officer .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6915895938873291
+  },
+  {
+    "text": "The number of permanent reductions of clerical workers is 22 employees , of which 19 in Finland .",
+    "true": "negative",
+    "pred": "neutral",
+    "confidence": 0.6882501244544983
+  },
+  {
+    "text": "The redesigned crushing circuit has been in operation since the start of September and its overall production rate on a weekly basis is in excess of an average of 40,000 tonnes a day .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6807519197463989
+  },
+  {
+    "text": "`` Our customers now have the chance to make bookings for all the services they want at one location , '' said Mikko Tuomainen , in-charge of Finnair 's Internet ( sales ) .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.6755518913269043
+  },
+  {
+    "text": "In Sweden , Gallerix accumulated SEK denominated sales were down 1 % and EUR denominated sales were up 11 % .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.6744527220726013
+  },
+  {
+    "text": "16 February 2011 - Finnish industrial machinery company Metso Oyj ( HEL : MEO1V ) said today it will deliver minerals processing equipment and basic engineering to Canadian miner Northland Resources ( OSL : NAUR ) ( TSE : NAU ) .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.6700252890586853
+  },
+  {
+    "text": "In China , Finnish Kone that provides elevators , escalators , and solutions for modernisation and maintenance will build 342 escalators that will be installed in a high-speed railway section between Beijing and Shanghai in a 1.5 years ' time .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.6689570546150208
+  },
+  {
+    "text": "Under the agreement Benefon 's forthcoming range of TWIG integrated GPS navigation and mobile phone devices will use the jointly developed web-based tracking and location technology , in both consumer and commercial applications .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6688553094863892
+  },
+  {
+    "text": "At the same time , the market for automated liquid handling devices is already larger than that for pipettes , according to Biohit .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6584089994430542
+  },
+  {
+    "text": "It 's even a little bit higher than Yara 's multiples on itself , ' an analyst in Helsinki said .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6579834818840027
+  },
+  {
+    "text": "Sales were down 14 per cent in Finland and up 27 per cent abroad where sales were lifted by the strong growth in sales in Russia and Lithuania .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.6571683883666992
+  },
+  {
+    "text": "The concept enables a commercially affordable way to manufacture high-quality TCO coated glass for the solar industry .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.6566354632377625
+  },
+  {
+    "text": "Finnish Neste Oil that was previously on the list , has fallen off the list completely .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.6479434967041016
+  },
+  {
+    "text": "The bank also expects additional costs , related to the Dash 8 - Q400 jets , which the group shelved in October 2007 .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.6465685963630676
+  },
+  {
+    "text": "`` The bond gathered subscriptions from some 400 investors and the issued amount can be considered substantial taking into account the main target group -- retail investors , '' Citycon CFO Eero Sihvonen said .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6369853615760803
+  },
+  {
+    "text": "The company said that it will supply the WCDMA 3G-HSPA radio network , including the modular , high capacity Nokia Flexi WCDMA base station in East Java , Bali , Sumatra and Batam .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.635800838470459
+  },
+  {
+    "text": "Dubai Nokia has announced the launch of `` Comes with Music '' , its ground-breaking service which introduces a new way for people to enjoy music .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.6284290552139282
+  },
+  {
+    "text": "Capman , the Finnish alternative asset manager , has made an acquisition for its Helsinki-focused vehicle , Real Estate Fund I. The fund has bought a seven-story office built in 1973 that underwent refurbishment at the end of the 1990s .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6263923645019531
+  },
+  {
+    "text": "`` Serving customers locally is one of the cornerstones of customer focus for us .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6156647205352783
+  },
+  {
+    "text": "Finnish food industry companies are interested in the opportunities provided by Ukraine .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.6030224561691284
+  },
+  {
+    "text": "The company plans to spend the proceeds from the rights offering for strengthening its balance sheet .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.5974736213684082
+  },
+  {
+    "text": "Operating profit totaled EUR 17.7 mn compared to EUR 17.6 mn in the corresponding period in 2007 .",
+    "true": "positive",
+    "pred": "negative",
+    "confidence": 0.581221342086792
+  },
+  {
+    "text": "Juhani J+\u00c6rvi , Corporate Executive Vice President of Kesko , says the Russian food retail sector is fragmented .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.5677604079246521
+  },
+  {
+    "text": "Production will expand to other of Elcoteq 's locations including Mexico and Hungary during 2010 .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.5677124857902527
+  },
+  {
+    "text": "Nokia will continue to invest in future development of Qt for the benefit of all users , both Commercial and LGPL .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.5294969081878662
+  },
+  {
+    "text": "In addition to Russia , we now seek additional growth in Ukraine .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.5256142020225525
+  },
+  {
+    "text": "Pohjola could increase its stake to 45 % in 2013 .",
+    "true": "neutral",
+    "pred": "positive",
+    "confidence": 0.5155291557312012
+  },
+  {
+    "text": "The company reported today an operating loss of EUR0 .1 m on net sales of EUR4 .5 m for the first quarter 2008 .",
+    "true": "negative",
+    "pred": "neutral",
+    "confidence": 0.5032389163970947
+  },
+  {
+    "text": "TeliaSonera is the leading telecommunications company in the Nordic and Baltic regions .",
+    "true": "positive",
+    "pred": "neutral",
+    "confidence": 0.5024991631507874
+  },
+  {
+    "text": "According to statistics by the Finnish Maritime Administration , shipping did not increase much in January-August 2009 , however .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.49274829030036926
+  },
+  {
+    "text": "Sales fell abroad but increased in Finland .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.48302608728408813
+  },
+  {
+    "text": "The broad-based WIG index ended Thursday 's session 0.1 pct up at 65,003.34 pts , while the blue-chip WIG20 was 1.13 down at 3,687.15 pts .",
+    "true": "neutral",
+    "pred": "negative",
+    "confidence": 0.46903207898139954
+  }
+]
