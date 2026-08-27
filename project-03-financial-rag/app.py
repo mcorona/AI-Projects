@@ -51,6 +51,18 @@ def load_report(name):
     return json.loads(path.read_text()) if path.exists() else None
 
 
+def md_safe(text: str) -> str:
+    """
+    Escape dollar signs before handing text to st.write.
+
+    Streamlit renders markdown, and markdown here treats $...$ as LaTeX.
+    Financial forum text is full of dollar amounts, so an unescaped passage
+    like "$1,000 ... $180" silently renders as mangled italic math instead
+    of the money it is.
+    """
+    return text.replace("$", "\\$")
+
+
 def has_api_key():
     if os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN"):
         return True
@@ -72,7 +84,7 @@ def tab_ask():
 
     st.sidebar.caption(
         "The dense retriever is bge-base-en-v1.5, which scored nDCG@10 = 0.406 "
-        "on the FiQA test split -- the best of the seven configurations "
+        "on the FiQA test split -- the best of the nine configurations "
         "benchmarked. See the Retrieval tab."
     )
 
@@ -119,7 +131,7 @@ def tab_ask():
                     "an answer. That is the intended behaviour on a retrieval miss -- "
                     "an honest abstention beats a confident guess dressed in citations."
                 )
-            st.write(result.answer)
+            st.write(md_safe(result.answer))
             cited = ", ".join(f"[{c}]" for c in result.citations) or "none"
             st.caption(f"Cited passages: {cited}  |  "
                        f"{usage.input_tokens} input / {usage.output_tokens} output tokens")
@@ -129,7 +141,7 @@ def tab_ask():
         is_gold = did in gold
         label = f"[{rank}] score {score:.3f}" + ("   ** human-judged relevant **" if is_gold else "")
         with st.expander(label, expanded=rank <= 3):
-            st.write(doc_text(corpus[did]))
+            st.write(md_safe(doc_text(corpus[did])))
             st.caption(f"doc id: {did}")
 
 
@@ -166,8 +178,10 @@ def tab_retrieval():
         "MRR@10": m.get("mrr@10"),
     } for name, m in metrics.items()]
     df = pd.DataFrame(rows).sort_values("nDCG@10", ascending=False)
-    st.dataframe(df.style.format({c: "{:.4f}" for c in df.columns if c != "Configuration"}),
-                 hide_index=True, use_container_width=True)
+    # st.table rather than st.dataframe: these are static result tables of
+    # nine rows, and the interactive grid squeezes every numeric column into
+    # an unreadable strip instead of auto-sizing them.
+    st.table(df.set_index("Configuration").map(lambda v: f"{v:.4f}"))
 
     st.info(
         "The two components the standard RAG recipe recommends -- hybrid RRF "
@@ -192,7 +206,10 @@ def tab_retrieval():
             "p": v["p_value"],
             "Significant": "yes" if v["p_value"] < 0.05 else "no",
         } for k, v in sig.items()]
-        st.dataframe(pd.DataFrame(srows), hide_index=True, use_container_width=True)
+        sdf = pd.DataFrame(srows)
+        sdf["Delta nDCG@10"] = sdf["Delta nDCG@10"].map("{:+.4f}".format)
+        sdf["p"] = sdf["p"].map(lambda v: "<0.0001" if v < 1e-4 else f"{v:.4f}")
+        st.table(sdf.set_index("Comparison"))
 
 
 # --- Tab 3: Answer quality -----------------------------------------------
@@ -227,7 +244,11 @@ def tab_answers():
             "Abstained": m.get("abstained"),
             "n": m.get("n_scored"),
         })
-    st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+    adf = pd.DataFrame(rows)
+    for c in ("Correct", "Correct or partial", "Grounded",
+              "Citation precision", "Abstained"):
+        adf[c] = adf[c].map(lambda v: "-" if pd.isna(v) else f"{v:.3f}")
+    st.table(adf.set_index("Condition"))
 
     cal = report.get("judge_calibration", {})
     if cal:
