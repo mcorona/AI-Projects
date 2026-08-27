@@ -1,0 +1,44 @@
+{
+  "dense_bge_vs_bm25": {
+    "mean_difference": 0.16886889426403476,
+    "ci_low": 0.14376425050970468,
+    "ci_high": 0.19359826910081646,
+    "p_value": 0.0,
+    "n_queries": 648
+  },
+  "dense_bge_vs_dense_minilm": {
+    "mean_difference": 0.037559832362386227,
+    "ci_low": 0.019308830900096205,
+    "ci_high": 0.05599798779310509,
+    "p_value": 0.0,
+    "n_queries": 648
+  },
+  "hybrid_vs_dense_bge": {
+    "mean_difference": -0.047437972086632224,
+    "ci_low": -0.06728741102415653,
+    "ci_high": -0.027702837525535647,
+    "p_value": 0.0,
+    "n_queries": 648
+  },
+  "rerank_dense_vs_dense_bge": {
+    "mean_difference": -0.02117062174010245,
+    "ci_low": -0.038040095461791414,
+    "ci_high": -0.004340757101958067,
+    "p_value": 0.0146,
+    "n_queries": 648
+  },
+  "rerank_dense_bge_vs_dense_bge": {
+    "mean_difference": -0.05225267983705063,
+    "ci_low": -0.0718490743935476,
+    "ci_high": -0.0330427712924825,
+    "p_value": 0.0,
+    "n_queries": 648
+  },
+  "rerank_bm25_vs_bm25": {
+    "mean_difference": 0.08654742467202896,
+    "ci_low": 0.0683587092285667,
+    "ci_high": 0.10469264927466249,
+    "p_value": 0.0,
+    "n_queries": 648
+  }
+}
