@@ -10,8 +10,15 @@ Nearly every RAG tutorial ends with a screenshot of a plausible-looking
 answer. That is not evidence. This project is built on a benchmark with
 human relevance judgments, so every claim in it is measured against ground
 truth rather than eyeballed — nine retrieval configurations scored against
-648 human-judged queries, and four generation conditions scored by an LLM
-judge that is itself calibrated before it is trusted.
+648 human-judged queries, and four generation conditions scored partly by
+metrics that need no model opinion at all and partly by an LLM judge that
+gets checked before it is believed.
+
+**The two headline results are both negative**, which is the point: the
+retrieval components the standard RAG recipe recommends make retrieval
+*worse*, and the full RAG pipeline answers *fewer* questions correctly than
+the same model with no retrieval at all. Both are measured, tested for
+significance, and explained below rather than buried.
 
 **Dataset:** [FiQA-2018](https://sites.google.com/view/fiqa/) as distributed
 in [BEIR](https://github.com/beir-cellar/beir) — 57,638 financial forum
@@ -128,7 +135,105 @@ human marked "relevant" do not actually contain an answer to the question.
 That bounds every number in this table and is a property of FiQA, not of
 the system.
 
-<!-- JUDGED_RESULTS -->
+### The judged results, and the finding that matters
+
+Answers judged by `claude-opus-5` against the human-judged gold passages:
+
+| Condition | Correct | Correct or partial | Grounded | Declined to answer |
+|---|---|---|---|---|
+| **No retrieval (closed book)** | **0.820** | 0.973 | — | 0.000 |
+| RAG — BM25 passages | 0.487 | 0.680 | 0.973 | 0.287 |
+| RAG — bge-base passages | 0.713 | 0.860 | 0.960 | 0.087 |
+| Oracle — gold passages | 0.927 | 0.960 | 0.987 | 0.040 |
+
+**Headline finding: retrieval-augmented generation loses to no retrieval at
+all.** Closed-book answers 82.0% of questions correctly; the best RAG
+configuration manages 71.3%. On the same 150 questions, closed-book is
+right where RAG is wrong 29 times and wrong where RAG is right 13 times —
+exact McNemar p = 0.020. It is not noise.
+
+That is the number a demo screenshot would never surface, and taking it at
+face value would be the wrong lesson. Three breakdowns say what is actually
+happening.
+
+**1. RAG's answers are better. It just gives fewer of them.** Restricted to
+questions where the system did not abstain:
+
+| Condition | n answered | Correct |
+|---|---|---|
+| No retrieval | 150 | 0.820 |
+| RAG — BM25 | 89 | 0.775 |
+| **RAG — bge-base** | 121 | **0.868** |
+| **Oracle** | 127 | **1.000** |
+
+Given passages that support an answer, grounding *helps* — and with the
+gold passages the system is right every single time it speaks. RAG loses
+the aggregate purely because abstentions are scored as not-correct.
+
+**2. The abstention is well-targeted, not blanket caution.** Splitting the
+bge-base condition by whether the retriever actually put a gold document in
+the context:
+
+| | n | Correct | Abstained |
+|---|---|---|---|
+| Gold document retrieved | 89 | 0.921 | 0.056 |
+| Retrieval missed entirely | 61 | 0.410 | 0.393 |
+
+The system abstains **seven times more often** when retrieval genuinely
+failed. It is detecting its own retrieval failures, not hedging at random.
+
+**3. The ceiling is retrieval, not generation.** Oracle scores 0.927
+against bge-base's 0.713. That 21-point gap is entirely attributable to
+documents the retriever failed to find — the same ~20% miss rate measured
+in Phase 1.
+
+So the real trade is not "RAG is worse". It is: **the grounding constraint
+converts retrieval failures into honest non-answers instead of confident
+parametric guesses.** On this benchmark that costs 11 points of raw
+correctness, because `claude-opus-5` already knows retail personal finance
+well and the corpus adds little it does not have. What it buys is
+verifiability — 96% grounded answers with checkable citations, against
+zero citations closed-book.
+
+For a domain the model has memorised, that trade is a bad deal. For
+proprietary documents, post-cutoff facts, or any setting where an answer
+has to be attributable, it is the entire point. Measuring it is how you
+tell which situation you are in — and no amount of eyeballing plausible
+answers would have revealed that RAG was *losing* here.
+
+### Can the judge be trusted?
+
+| Check | Result |
+|---|---|
+| Self-consistency (same judge, re-run, n=297) | **96.6%** exact verdict agreement |
+| Cross-model agreement (`claude-haiku-4-5`) | **Not run** — see below |
+
+96.6% self-consistency means the judge can comfortably resolve the 11-point
+gap that carries the headline finding.
+
+**The cross-model check did not run.** The account's API credit balance was
+exhausted on the final batch, and that batch was never submitted. It is
+recorded as `"status": "not run"` in
+[`output/reports/generation_metrics.json`](output/reports/generation_metrics.json)
+rather than quietly omitted. Until it runs, the judged numbers are
+**un-cross-validated**: the generator and the judge are both `claude-opus-5`,
+so self-preference bias remains unmeasured. It costs about $0.40 to close:
+
+```bash
+python -m src.evaluation.run_generation_eval --phase judge    # resumes, submits only the missing batch
+python -m src.evaluation.run_generation_eval --phase analyze
+```
+
+The three judge-free metrics — abstention, citation precision, invalid
+citations — do not depend on the judge at all and stand as reported.
+
+### Cost
+
+$13.68 total through the Batches API at 50% pricing: $4.81 for 600 answers,
+$8.87 for 1,347 judgments. Twelve sample answers, three per judge verdict
+including the ones judged incorrect, are committed in
+[`output/reports/answer_samples.json`](output/reports/answer_samples.json)
+so the judge's calls can be checked rather than taken on faith.
 
 ---
 

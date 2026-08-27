@@ -1,0 +1,180 @@
+{
+  "correct": [
+    {
+      "condition": "oracle",
+      "question": "401k Transfer After Business Closure",
+      "answer": "The passages give only limited guidance. They suggest consulting an attorney, since a rollover request may require the former plan sponsor to act. If the business was a corporation or LLC that has been officially dissolved, you can obtain evidence of dissolution from your state's Department of State/Corporations and present it to show that the request (for the former employer to sign off or close the plan) is unfeasible. If the business was a sole proprietorship, it is harder: you would need to locate the owner personally and have him formally close the plan [1]. The sources don't cover the specific mechanics of transferring the balance to an IRA, custodian requirements, or abandoned-plan procedures.",
+      "citations": [
+        1
+      ],
+      "context_sufficient": false,
+      "gold_passages_in_context": 1,
+      "judge_correctness": "correct",
+      "judge_correctness_reason": "The candidate answer conveys the reference's substance: consult an attorney, use state dissolution evidence if a corporation/LLC, and track down the owner if a sole proprietorship.",
+      "judge_groundedness": "grounded"
+    },
+    {
+      "condition": "rag_dense",
+      "question": "A-B-C Class Shares: What's the difference?",
+      "answer": "Share classes aren't standardized \u2014 the differences vary by company, so you must research the specific issuer's terms; classes can differ in voting power, ownership proportion, and liquidation preference [4]. Common patterns: Alphabet has Class A (GOOGL) with votes, Class C (GOOG) with none, and Class B held by founders with extra voting power and not publicly traded; the voting class trades slightly higher [1]. Elsewhere Class A may carry 100 votes versus one vote for Class B, with different par values and ISINs and slightly different prices [2]. Berkshire's Class B was created for affordability at 1/30 of a Class A share (now 1/1500) with 1/10,000 the voting rights, convertible only A-to-B [5]. Check the company's investor-relations stock information page [3].",
+      "citations": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "context_sufficient": true,
+      "gold_passages_in_context": 1,
+      "judge_correctness": "correct",
+      "judge_correctness_reason": "The candidate covers the key points from the references \u2014 share classes are not standardized and differ by company in voting rights, ownership proportion, and liquidation preference \u2014 and uses the Berkshire A/B example consistently with the references.",
+      "judge_groundedness": "grounded"
+    },
+    {
+      "condition": "oracle",
+      "question": "A-B-C Class Shares: What's the difference?",
+      "answer": "There's no universal standard \\u2014 share classes are defined by each company, so you have to research what differs for that specific corporation [2]. Common differences include liquidation preference (some classes rank ahead of others if the company fails), the proportion of ownership interest each share represents, voting rights, and pricing [1][2]. Often the non-common classes are preferred stock (e.g., JPM-F), which typically pays higher dividends and ranks ahead of common holders but behind bondholders in a wind-up [1]. Berkshire Hathaway B shares illustrate scaling: 1/500th of the economic rights and 1/10,000th of the voting rights of an A share [1]. Be cautious outside common stock \\u2014 many preferred issues are thinly traded and hard to trade [1].",
+      "citations": [
+        1,
+        2
+      ],
+      "context_sufficient": true,
+      "gold_passages_in_context": 2,
+      "judge_correctness": "correct",
+      "judge_correctness_reason": "The candidate accurately captures both references' main points: share classes are company-specific and not standardized, differing in liquidation preference, ownership proportion, voting rights, and pricing, with the preferred stock and Berkshire B examples correctly described.",
+      "judge_groundedness": "grounded"
+    }
+  ],
+  "incorrect": [
+    {
+      "condition": "rag_dense",
+      "question": "401k Transfer After Business Closure",
+      "answer": "The passages only partly touch on this. They confirm that in a defined-contribution plan (401k, 403b, 457, TSP) the employer must turn over withheld contributions and any match to the plan trustee within days or weeks, so once the money reaches the trustee it is beyond the company's reach even if the business folds or enters bankruptcy; only amounts still in that payday-to-deposit window are at risk [3]. Also, on separation from an employer any 401(k) loan generally becomes due immediately (or within 30-60 days), and an unpaid balance can be treated as a premature distribution subject to income tax and excise tax [4]. The sources do not explain the actual rollover/termination process after a business closes.",
+      "citations": [
+        3,
+        4
+      ],
+      "context_sufficient": false,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "incorrect",
+      "judge_correctness_reason": "The candidate discusses unrelated points (timing of employer deposits to the trustee, 401k loan repayment on separation) and explicitly says it cannot explain the rollover/termination process, missing the reference's key guidance about consulting an attorney and using state dissolution evidence to show the transfer request is unfeasible.",
+      "judge_groundedness": "grounded"
+    },
+    {
+      "condition": "closed_book",
+      "question": "A-B-C Class Shares: What's the difference?",
+      "answer": "These are mutual fund share classes that differ mainly in how sales charges (loads) and ongoing fees are levied, not in the underlying portfolio. Class A shares charge a front-end load (often ~3\u20135.75%) deducted at purchase, with breakpoint discounts for larger investments and generally the lowest annual 12b-1/expense ratio \u2014 best for large, long-term holdings. Class B shares have no front-end load but a contingent deferred sales charge that declines over several years, plus higher annual fees; they often convert to Class A after 6\u20138 years, and are now largely phased out. Class C shares have little or no front-end load, a small 1% CDSC for about a year, and permanently higher annual fees (~1% 12b-1) \u2014 cheapest for short holding periods, costliest long term.",
+      "citations": [],
+      "context_sufficient": true,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "incorrect",
+      "judge_correctness_reason": "The references address different classes of a corporation's stock (preferred vs common, differing voting rights/ownership proportions, non-standardized across companies), whereas the candidate answers about mutual fund load structures \u2014 a different question.",
+      "judge_groundedness": null
+    },
+    {
+      "condition": "rag_dense",
+      "question": "Alternative means of salary for my employees",
+      "answer": "The passages only touch on this obliquely, so treat this as partial. They describe a few compensation models: conventional salary, which one writer argues effectively means unpaid extra work unless paired with stock options or sales incentives [1]; hourly/billed work, where paying beyond billed hours raises liability, workers' comp and employment-tax issues [1]; and open or \"transparent\" pay scales tied to performance metrics, which work best in high-turnover, commission-driven roles (e.g. sales agents) but poorly for salaried staff with soft duties outside core metrics [5]. Also relevant: pay should be benchmarked to market rates for the role, city and experience level, since employees who feel underpaid relative to peers lose morale and leave [2][3]. The sources don't cover profit-sharing, equity grants, or benefits design.",
+      "citations": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "context_sufficient": false,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "incorrect",
+      "judge_correctness_reason": "The references address paying employees in a self-created/alternative currency (won't work; consider local currency initiatives), while the candidate discusses conventional compensation structures, market benchmarking, and pay transparency \u2014 answering a different question and citing content not in the passages.",
+      "judge_groundedness": "partially_grounded"
+    }
+  ],
+  "no_answer": [
+    {
+      "condition": "rag_bm25",
+      "question": "A-B-C Class Shares: What's the difference?",
+      "answer": "The passages don't actually explain what distinguishes Class A, B and C shares. They only give fragments: Google issued Class C shares to Class A (GOOG) holders in 2014, with tickers shifting so Class C became GOOG and Class A became GOOGL, and a settlement compensating Class C holders if their price diverged below Class A by set percentages [1][4]; Shopify offered \"Class A subordinate voting shares\" in its IPO, implying differing voting rights [3]. Nothing here describes the general framework \u2014 typically voting power, dividend or conversion rights for corporate stock, or load/fee structures for mutual fund share classes (passage 2 only contrasts Vanguard investor versus institutional expense ratios) [2]. That core explanation is missing.",
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "context_sufficient": false,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "no_answer",
+      "judge_correctness_reason": "The candidate declines to answer, asserting that the source material lacks the explanation and that \"that core explanation is missing,\" rather than actually explaining the share class differences (only naming the framework in passing while disclaiming it).",
+      "judge_groundedness": "partially_grounded"
+    },
+    {
+      "condition": "rag_bm25",
+      "question": "Alternative means of salary for my employees",
+      "answer": "The provided passages don't really cover alternative forms of employee compensation. The closest is a note that FLSA minimum-wage/overtime rules exempt bona fide executive, administrative, professional and outside sales employees who are paid on a salary basis of at least $455 per week, with a speculation that restricted stock could work around some rules for companies of a certain size [5]. Another passage only touches on 401(k) contribution limits and how HCE rules can cap highly paid employees' deferrals [1]. There is nothing here on structuring pay via equity, bonuses, benefits, profit sharing, or the legal and tax constraints on doing so, so I can't give a grounded answer.",
+      "citations": [
+        1,
+        5
+      ],
+      "context_sufficient": false,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "no_answer",
+      "judge_correctness_reason": "The candidate explicitly declines to give a grounded answer, claiming the material doesn't cover the question, and never addresses the references' point that a self-created currency would be worthless (or the local-currency alternative).",
+      "judge_groundedness": "grounded"
+    },
+    {
+      "condition": "rag_bm25",
+      "question": "Am I required to have a lawyer create / oversee creation of my will?",
+      "answer": "The provided sources don't cover wills. Passage [1] discusses whether a lawyer is required in a California real-estate purchase (concluding one generally isn't required in Los Angeles County, though only a licensed attorney may draft or advise on contract clauses), but it says nothing about will drafting, witnessing, or holographic-will requirements. Nothing in the other passages addresses estate planning at all. To answer, I'd need sources on your state's probate/wills statutes \u2014 execution formalities, witness and notary rules, and whether self-drafted or holographic wills are valid there.",
+      "citations": [
+        1
+      ],
+      "context_sufficient": false,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "no_answer",
+      "judge_correctness_reason": "The candidate declines to answer, claiming the sources don't cover wills, and provides no substantive response about whether a lawyer is required.",
+      "judge_groundedness": "grounded"
+    }
+  ],
+  "partially_correct": [
+    {
+      "condition": "closed_book",
+      "question": "401k Transfer After Business Closure",
+      "answer": "When an employer shuts down, the 401(k) plan is usually terminated. On termination you become 100% vested in all employer contributions, and the plan must distribute your account. Your best move is normally a direct (trustee-to-trustee) rollover into a traditional IRA or a new employer's plan \u2014 that avoids the mandatory 20% withholding, income tax, and the 10% early-withdrawal penalty. If you take a check made out to you, you have 60 days to redeposit the full amount. If the company vanished without formally terminating the plan, contact the plan's recordkeeper/custodian directly, check the last Form 5500 filing for the trustee, and look at the DOL's Abandoned Plan Program and the National Registry of Unclaimed Retirement Benefits.",
+      "citations": [],
+      "context_sufficient": true,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "partially_correct",
+      "judge_correctness_reason": "The candidate gives sound, non-contradictory general guidance (termination vesting, direct rollover, contacting the custodian, Form 5500, DOL Abandoned Plan Program), but misses the reference's core point about documenting the company's dissolution with the state (or tracking down a sole proprietor) to satisfy the plan-closure requirement, and doesn't mention consulting an attorney.",
+      "judge_groundedness": null
+    },
+    {
+      "condition": "rag_bm25",
+      "question": "401k Transfer After Business Closure",
+      "answer": "The passages don't address business-closure/plan-termination rules specifically, but they do cover what to do with a former employer's 401k. Don't take a cash distribution \u2014 keep the money in a retirement vehicle [4]. Your options are: roll it into your new employer's 401k (ask that plan's provider for the transfer form) [4][5]; roll it into a Traditional IRA at a low-cost provider such as Vanguard, Fidelity or Schwab [4]; or convert to a Roth IRA, which triggers tax on the converted balance [4]. Request a direct rollover, with the check written to the receiving institution for your benefit (e.g., \"Schwab FBO: John Doe acct #12345\"); a direct pre-tax-to-pre-tax transfer creates no tax liability [5]. Specific deadlines when a plan terminates aren't covered here.",
+      "citations": [
+        4,
+        5
+      ],
+      "context_sufficient": false,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "partially_correct",
+      "judge_correctness_reason": "The answer gives generally sound advice on rolling over a former employer's 401k (direct rollover, IRA/new plan options, avoid cashing out) but misses the reference's main point about the business-closure obstacle \u2014 needing proof of the entity's dissolution from the state (or tracking down the sole proprietor) to satisfy the plan administrator.",
+      "judge_groundedness": "grounded"
+    },
+    {
+      "condition": "rag_dense",
+      "question": "Advice on strategy for when to sell",
+      "answer": "Rather than trying to time the market, set a target asset allocation across investment classes and stick to it, rebalancing periodically: when a holding rises enough to push you above your target range, sell some and buy in an under-weighted class, and do the reverse when something falls [1][5]. That mechanically locks in profits while keeping exposure to future gains, and is essentially what \"buy low, sell high\" means in practice [1][5]. Treat \"buy low, sell high\" mainly as guidance on when *not* to act \\u2014 don't sell into a market panic after stocks have already fallen, and don't follow the herd [4]. Keep emotion out; dollar-cost averaging at fixed intervals helps [3]. Sell decisions should follow research, not frequent trading [2].",
+      "citations": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "context_sufficient": true,
+      "gold_passages_in_context": 0,
+      "judge_correctness": "partially_correct",
+      "judge_correctness_reason": "The candidate correctly rejects arbitrary market timing and notes that sell decisions should follow research, which is consistent with the references, but it largely reframes the answer around portfolio rebalancing and omits the references' central points: re-evaluating whether the original reasons for buying still hold, tax consequences (long-term capital gains, wash-sale rules), and partial selling/trailing stops.",
+      "judge_groundedness": "grounded"
+    }
+  ]
+}

@@ -212,30 +212,44 @@ def phase_judge(client, queries, corpus, qrels):
             cross_reqs.append((key, correctness_params(queries[qid], references[qid], text,
                                                       model=CROSS_JUDGE_MODEL)))
 
-    out, usages = {}, {}
+    out, usages, skipped = {}, {}, {}
     for tag, reqs, model in (
         ("judge_groundedness", ground_reqs, JUDGE_MODEL),
         ("judge_correctness", correct_reqs, JUDGE_MODEL),
         ("judge_correctness_repeat", repeat_reqs, JUDGE_MODEL),
         ("judge_correctness_cross", cross_reqs, CROSS_JUDGE_MODEL),
     ):
-        results, usage = batchlib.run(client, reqs, tag, model)
+        # One batch failing must not throw away the batches already paid
+        # for. This is not hypothetical: the first full run of this
+        # evaluation exhausted its API credit balance on the last batch,
+        # and an unguarded loop lost the three completed ones with it.
+        # Collection of an already-submitted batch costs nothing, so a
+        # re-run recovers them.
+        try:
+            results, usage = batchlib.run(client, reqs, tag, model)
+        except anthropic.APIStatusError as e:
+            print(f"[{tag}] SKIPPED -- {type(e).__name__}: {e.message}")
+            skipped[tag] = f"{type(e).__name__}: {e.message}"
+            continue
         out[tag] = {k: v.get("parsed") for k, v in results.items()}
         usages[tag] = usage
 
     (WORK_DIR / "judgments.json").write_text(json.dumps(out, indent=2))
     (WORK_DIR / "judge_usage.json").write_text(json.dumps(usages, indent=2))
+    if skipped:
+        (WORK_DIR / "judge_skipped.json").write_text(json.dumps(skipped, indent=2))
     total = sum(u["estimated_usd"] for u in usages.values())
-    print(f"judging cost ~${total:.2f}")
+    print(f"judging cost ~${total:.2f}"
+          + (f"  ({len(skipped)} batch(es) skipped)" if skipped else ""))
 
 
 def phase_analyze(queries, corpus, qrels):
     records = json.loads((WORK_DIR / "answers.json").read_text())
     judgments = json.loads((WORK_DIR / "judgments.json").read_text())
-    ground = judgments["judge_groundedness"]
-    correct = judgments["judge_correctness"]
-    repeat = judgments["judge_correctness_repeat"]
-    cross = judgments["judge_correctness_cross"]
+    ground = judgments.get("judge_groundedness", {})
+    correct = judgments.get("judge_correctness", {})
+    repeat = judgments.get("judge_correctness_repeat", {})
+    cross = judgments.get("judge_correctness_cross", {})
 
     by_condition = defaultdict(lambda: defaultdict(list))
     for key, rec in records.items():
@@ -285,11 +299,23 @@ def phase_analyze(queries, corpus, qrels):
         return {"n": len(keys), "exact_agreement": round(same / len(keys), 4),
                 "binary_agreement": round(binary / len(keys), 4)}
 
+    # A calibration check that did not run is reported as "not run", never
+    # as a passing score or an omission the reader has to notice.
+    skipped_path = WORK_DIR / "judge_skipped.json"
+    skipped = json.loads(skipped_path.read_text()) if skipped_path.exists() else {}
     report["judge_calibration"] = {
-        "self_consistency": agreement(correct, repeat),
-        "cross_model": agreement(correct, cross),
+        "self_consistency": agreement(correct, repeat) or {"status": "not run"},
+        "cross_model": agreement(correct, cross) or {
+            "status": "not run",
+            "reason": skipped.get("judge_correctness_cross", "batch missing"),
+        },
         "cross_model_id": CROSS_JUDGE_MODEL,
     }
+
+    # The aggregate table alone is misleading here, because a condition can
+    # score badly for two completely different reasons: it answered wrongly,
+    # or it declined to answer. These three breakdowns separate them.
+    report["breakdowns"] = _breakdowns(records, correct, qrels)
 
     usage_files = {"generation_usage.json": "generation", "judge_usage.json": "judging"}
     costs = {}
@@ -320,8 +346,77 @@ def phase_analyze(queries, corpus, qrels):
     cal = report["judge_calibration"]
     print(f"\njudge self-consistency: {cal['self_consistency']}")
     print(f"judge vs {CROSS_JUDGE_MODEL}: {cal['cross_model']}")
+    if "status" in cal["cross_model"]:
+        print("  ^ the cross-model check did NOT run -- treat the judged "
+              "numbers as un-cross-validated.")
     print(f"estimated cost: {costs}")
     print(f"\nwrote {(REPORTS_DIR / 'generation_metrics.json').relative_to(ROOT)}")
+
+
+def _breakdowns(records, correct, qrels) -> dict:
+    """
+    Three views the headline table cannot show.
+
+    verdict_distribution   correct / partial / incorrect / no_answer, so a
+                           low score is attributable to wrong answers or to
+                           abstention rather than lumped together.
+    given_an_answer        correctness among questions the condition did
+                           NOT abstain on -- answer quality with the
+                           decision-to-answer factored out.
+    rag_dense_by_retrieval correctness and abstention split by whether the
+                           retriever actually put a gold document in the
+                           context. This is what says whether abstention is
+                           well-targeted or just blanket caution.
+    closed_book_vs_rag_dense  exact McNemar on the paired outcomes.
+    """
+    from src.evaluation.significance import mcnemar_exact
+
+    verdicts = defaultdict(Counter)
+    answered = defaultdict(list)
+    for key, rec in records.items():
+        v = (correct.get(key) or {}).get("verdict")
+        if not rec["answer"] or not v:
+            continue
+        cond = rec["condition"]
+        verdicts[cond][v] += 1
+        if cond == "closed_book" or rec["answer"]["context_sufficient"]:
+            answered[cond].append(v == "correct")
+
+    out = {
+        "verdict_distribution": {
+            c: {v: round(n / sum(verdicts[c].values()), 4) for v, n in verdicts[c].items()}
+            for c in verdicts
+        },
+        "given_an_answer": {
+            c: {"n": len(v), "correct": round(sum(v) / len(v), 4)}
+            for c, v in answered.items() if v
+        },
+    }
+
+    hit, miss = [], []
+    for key, rec in records.items():
+        if rec["condition"] != "rag_dense" or not rec["answer"]:
+            continue
+        v = (correct.get(key) or {}).get("verdict")
+        if not v:
+            continue
+        bucket = hit if any(d in qrels[rec["qid"]] for d in rec["context_ids"]) else miss
+        bucket.append((v == "correct", not rec["answer"]["context_sufficient"]))
+    out["rag_dense_by_retrieval"] = {
+        name: {"n": len(g),
+               "correct": round(sum(c for c, _ in g) / len(g), 4),
+               "abstained": round(sum(a for _, a in g) / len(g), 4)}
+        for name, g in (("gold_doc_retrieved", hit), ("retrieval_missed", miss)) if g
+    }
+
+    def correct_map(cond):
+        return {rec["qid"]: (correct.get(k) or {}).get("verdict") == "correct"
+                for k, rec in records.items()
+                if rec["condition"] == cond and (correct.get(k) or {}).get("verdict")}
+
+    out["closed_book_vs_rag_dense"] = mcnemar_exact(
+        correct_map("closed_book"), correct_map("rag_dense"))
+    return out
 
 
 def _write_samples(records, correct, ground, qrels, per_verdict: int = 3):

@@ -22,6 +22,26 @@ Demonstrating and measuring a RAG pipeline: which retrieval components earn
 their cost, how much retrieval quality survives into answer quality, and how
 to calibrate an LLM judge before believing it.
 
+### The result this card exists to qualify
+
+On this benchmark, the full RAG pipeline answers **fewer** questions
+correctly than the same model with no retrieval at all: 71.3% against
+82.0%, exact McNemar p = 0.020 over the same 150 questions.
+
+The system is not broken. Restricted to questions it did not abstain on, it
+is *more* accurate than closed-book (86.8% vs 82.0%) and, given the gold
+passages, correct every time (100%, n=127). It loses the aggregate because
+it declines to answer when its passages do not support one, and abstentions
+score as not-correct.
+
+That is the trade this system makes and it should be stated plainly: **it
+exchanges raw answer rate for attributability.** For a domain the generator
+has already memorised — retail personal finance is exactly that — the trade
+is a bad deal. For proprietary documents, post-cutoff facts, or any setting
+where an answer must be traceable to a source, it is the whole point.
+Anyone reusing this pipeline should measure which situation they are in
+rather than assuming.
+
 ### Out of scope
 
 - **Financial or investment advice.** The corpus is anonymous forum opinion,
@@ -51,7 +71,7 @@ BM25 passages / bge passages / gold passages). Three of the metrics need no
 model judgment at all: abstention rate, citation precision against the
 qrels, and invalid-citation rate. The two that do — groundedness and
 correctness — are produced by an LLM judge whose reliability is measured
-before its verdicts are used.
+before its verdicts are used, with the caveat in limitation 4 below.
 
 ### Validation against published numbers
 
@@ -64,11 +84,15 @@ so this check is the precondition for everything else in the project.
 
 ## What it does well
 
-- **Abstains when retrieval fails.** Given weak (BM25) passages the system
-  declines to answer 40.7% of the time; given the best retriever, 19.3%.
-  The abstention rate tracks retrieval quality rather than staying flat,
-  which is the property that separates a system that knows what it doesn't
-  know from one that confabulates fluently.
+- **Detects its own retrieval failures.** Splitting the best RAG condition
+  by whether the retriever actually surfaced a gold document: it abstains
+  5.6% of the time when it did, and 39.3% when it did not — seven times
+  more often, on exactly the questions where abstention is correct. On the
+  same split, correctness is 92.1% vs 41.0%. The abstention is targeted,
+  not blanket caution.
+- **Is accurate when it does answer.** 86.8% correct on non-abstained
+  questions, above the 82.0% closed-book rate, and 100% given gold
+  passages.
 - **Never invents a citation.** Across 600 generated answers, zero cited a
   passage number that was not in its context.
 - **Cites relevant passages more often when given better ones.** Citation
@@ -106,13 +130,26 @@ reality".
 
 The generator and the primary judge are both `claude-opus-5`. This is a
 real self-preference risk and cannot be argued away, only measured. Two
-checks are run and reported in `output/reports/generation_metrics.json`:
+checks were designed; **only one of them actually ran.**
 
-- **Self-consistency** — the same judge re-runs a subset. Disagreement here
-  is an upper bound on how finely the judge can discriminate.
-- **Cross-model agreement** — `claude-haiku-4-5` re-judges the same items.
-  If the ranking of conditions survives a different judge, the ranking is
-  probably about the answers; if it does not, it is about the judge.
+- **Self-consistency — ran.** The same judge re-judged 297 items and agreed
+  with itself on 96.6% of exact verdicts (98.0% on the correct / not-correct
+  collapse). The judge is precise enough to resolve the 11-point gap that
+  carries the headline finding.
+- **Cross-model agreement — did NOT run.** The account's API credit balance
+  was exhausted before this batch was submitted. It is recorded as
+  `"status": "not run"` in `output/reports/generation_metrics.json` rather
+  than omitted.
+
+**Consequence: every judged number in this project is un-cross-validated.**
+A judge that systematically favours its own family's output would inflate
+all four conditions, but not necessarily equally, and nothing here rules
+that out. The check costs roughly $0.40 to run (`--phase judge` resumes and
+submits only the missing batch).
+
+The three judge-free metrics — abstention rate, citation precision against
+the qrels, and invalid-citation rate — involve no model opinion and are
+unaffected.
 
 Neither check is a substitute for human labels, which this project does not
 have. The judged numbers should be read as ordinal (condition A beat

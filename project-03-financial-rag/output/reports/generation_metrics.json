@@ -1,0 +1,125 @@
+{
+  "n_questions": 150,
+  "top_k_context": 5,
+  "generator_model": "claude-opus-5",
+  "judge_model": "claude-opus-5",
+  "conditions": {
+    "closed_book": {
+      "correct": 0.82,
+      "correct_or_partial": 0.9733,
+      "declined": 0.0,
+      "n_scored": 150
+    },
+    "rag_bm25": {
+      "correct": 0.4867,
+      "correct_or_partial": 0.68,
+      "declined": 0.2867,
+      "grounded": 0.9733,
+      "ungrounded": 0.0,
+      "abstained": 0.4067,
+      "invalid_citations": 0.0,
+      "citation_precision": 0.1992,
+      "n_scored": 150
+    },
+    "rag_dense": {
+      "correct": 0.7133,
+      "correct_or_partial": 0.86,
+      "declined": 0.0867,
+      "grounded": 0.96,
+      "ungrounded": 0.0,
+      "abstained": 0.1933,
+      "invalid_citations": 0.0,
+      "citation_precision": 0.3029,
+      "n_scored": 150
+    },
+    "oracle": {
+      "correct": 0.9267,
+      "correct_or_partial": 0.96,
+      "declined": 0.04,
+      "grounded": 0.9867,
+      "ungrounded": 0.0,
+      "abstained": 0.1533,
+      "invalid_citations": 0.0,
+      "citation_precision": 1.0,
+      "n_scored": 150
+    }
+  },
+  "judge_calibration": {
+    "self_consistency": {
+      "n": 297,
+      "exact_agreement": 0.9663,
+      "binary_agreement": 0.9798
+    },
+    "cross_model": {
+      "status": "not run",
+      "reason": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeTvCyDrKt3ZkNx2a862J'}"
+    },
+    "cross_model_id": "claude-haiku-4-5"
+  },
+  "breakdowns": {
+    "verdict_distribution": {
+      "closed_book": {
+        "correct": 0.82,
+        "incorrect": 0.0267,
+        "partially_correct": 0.1533
+      },
+      "rag_bm25": {
+        "correct": 0.4867,
+        "partially_correct": 0.1933,
+        "no_answer": 0.2867,
+        "incorrect": 0.0333
+      },
+      "rag_dense": {
+        "correct": 0.7133,
+        "partially_correct": 0.1467,
+        "incorrect": 0.0533,
+        "no_answer": 0.0867
+      },
+      "oracle": {
+        "correct": 0.9267,
+        "partially_correct": 0.0333,
+        "no_answer": 0.04
+      }
+    },
+    "given_an_answer": {
+      "closed_book": {
+        "n": 150,
+        "correct": 0.82
+      },
+      "rag_bm25": {
+        "n": 89,
+        "correct": 0.7753
+      },
+      "rag_dense": {
+        "n": 121,
+        "correct": 0.8678
+      },
+      "oracle": {
+        "n": 127,
+        "correct": 1.0
+      }
+    },
+    "rag_dense_by_retrieval": {
+      "gold_doc_retrieved": {
+        "n": 89,
+        "correct": 0.9213,
+        "abstained": 0.0562
+      },
+      "retrieval_missed": {
+        "n": 61,
+        "correct": 0.4098,
+        "abstained": 0.3934
+      }
+    },
+    "closed_book_vs_rag_dense": {
+      "a_only": 29,
+      "b_only": 13,
+      "discordant": 42,
+      "p_value": 0.01952
+    }
+  },
+  "estimated_cost_usd": {
+    "generation": 4.81,
+    "judging": 8.87
+  }
+}

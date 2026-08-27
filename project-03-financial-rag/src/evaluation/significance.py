@@ -68,6 +68,32 @@ def compare(name_a: str, name_b: str, qrels, k: int = 10) -> Dict[str, float]:
                             per_query_scores(load(name_b), qrels, k))
 
 
+def mcnemar_exact(a_correct: Dict[str, bool], b_correct: Dict[str, bool]) -> Dict[str, float]:
+    """
+    Exact McNemar test on paired binary outcomes.
+
+    The right test for "did system A answer more questions correctly than
+    system B" when both were run on the *same* questions. Only the
+    discordant pairs carry information -- questions both got right, or both
+    got wrong, say nothing about which is better -- so an unpaired
+    proportion test on the same data would be answering a different and
+    easier question.
+
+    Uses the exact binomial rather than the chi-square approximation
+    because the discordant count here is small (tens, not hundreds).
+    """
+    from math import comb
+    keys = [k for k in a_correct if k in b_correct]
+    b = sum(1 for k in keys if a_correct[k] and not b_correct[k])
+    c = sum(1 for k in keys if not a_correct[k] and b_correct[k])
+    n = b + c
+    if n == 0:
+        return {"a_only": 0, "b_only": 0, "discordant": 0, "p_value": 1.0}
+    tail = sum(comb(n, i) for i in range(min(b, c) + 1)) / 2 ** n
+    return {"a_only": b, "b_only": c, "discordant": n,
+            "p_value": round(min(1.0, 2 * tail), 6)}
+
+
 COMPARISONS = [
     # Does the dense retriever earn its GPU over the lexical baseline?
     ("dense_bge", "bm25"),
