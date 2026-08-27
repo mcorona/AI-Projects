@@ -1,0 +1,28 @@
+# Local environment
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Version control
+.git/
+.gitignore
+
+# Dataset and cached feature matrices -- the image is for serving one photo
+# at a time, not for training or re-evaluating. The 792 MB dataset and the
+# ~64 MB of cached features have no place in it.
+data/
+
+# Notebooks, tests, docs
+notebooks/
+tests/
+.ipynb_checkpoints/
+*.md
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
