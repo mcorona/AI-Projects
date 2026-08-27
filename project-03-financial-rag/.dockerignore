@@ -1,0 +1,33 @@
+# Local environment
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Version control
+.git/
+.gitignore
+
+# Data & artifacts -- mount at runtime instead of baking a 3 GB corpus and
+# an 88 MB embedding matrix into the image (see Dockerfile).
+data/
+*.npy
+*.jsonl
+
+# Notebooks & docs (not needed to serve the dashboard)
+notebooks/
+tests/
+.ipynb_checkpoints/
+*.md
+
+# Credentials -- never in an image
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp

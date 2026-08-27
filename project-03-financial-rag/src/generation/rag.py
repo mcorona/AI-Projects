@@ -33,6 +33,13 @@ from pydantic import BaseModel, Field
 GENERATOR_MODEL = os.getenv("RAG_GENERATOR_MODEL", "claude-opus-5")
 MAX_TOKENS = 1500
 
+# Answering a <=120-word question from passages that are already in the
+# prompt is a reading task, not a reasoning task, so generation runs at
+# medium effort. The judges (src/generation/judge.py) stay at the default
+# high effort -- the measuring instrument is where thoroughness is worth
+# paying for.
+GENERATOR_EFFORT = os.getenv("RAG_GENERATOR_EFFORT", "medium")
+
 SYSTEM_PROMPT = """You answer personal-finance and investing questions for a \
 retrieval-augmented QA system that is being evaluated for factual grounding.
 
@@ -44,8 +51,10 @@ cite the passage numbers you used, e.g. [2]. Do not cite a passage you did not u
 context_sufficient to false and say plainly what is missing. Do not fall back \
 on your own knowledge to paper over a retrieval failure -- an honest "the \
 provided sources don't cover this" is the correct answer in that case.
-- When no context is provided at all, answer from your own knowledge and \
-leave citations empty."""
+- When no context is provided at all, answer from your own knowledge, leave \
+citations empty, and leave context_sufficient as true -- that field describes \
+provided passages, and with none provided there is nothing for it to describe. \
+Do not use it to mean "I am unsure"."""
 
 
 class RagAnswer(BaseModel):
@@ -90,20 +99,26 @@ def build_messages(question: str, context: Optional[str]) -> List[dict]:
 
 
 def answer(client: anthropic.Anthropic, question: str,
-           context: Optional[str] = None, model: str = GENERATOR_MODEL) -> RagAnswer:
-    """Generate one answer synchronously. Used by the app and by smoke tests."""
+           context: Optional[str] = None, model: str = GENERATOR_MODEL,
+           effort: str = GENERATOR_EFFORT):
+    """
+    Generate one answer synchronously. Used by the app and the pilot run.
+
+    Returns (RagAnswer, usage) so callers can price a run before scaling it.
+    """
     response = client.messages.parse(
         model=model,
         max_tokens=MAX_TOKENS,
         system=SYSTEM_PROMPT,
         messages=build_messages(question, context),
+        output_config={"effort": effort},
         output_format=RagAnswer,
     )
-    return response.parsed_output
+    return response.parsed_output, response.usage
 
 
 def batch_params(question: str, context: Optional[str],
-                 model: str = GENERATOR_MODEL) -> dict:
+                 model: str = GENERATOR_MODEL, effort: str = GENERATOR_EFFORT) -> dict:
     """
     The same request as `answer()`, shaped for the Batches API.
 
@@ -119,10 +134,11 @@ def batch_params(question: str, context: Optional[str],
         "system": SYSTEM_PROMPT,
         "messages": build_messages(question, context),
         "output_config": {
+            "effort": effort,
             "format": {
                 "type": "json_schema",
                 "schema": _strict_schema(RagAnswer),
-            }
+            },
         },
     }
 
