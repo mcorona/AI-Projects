@@ -1,0 +1,9 @@
+config: !!python/object:src.models.sentiment_classifier.ModelConfig
+  dropout: 0.1
+  learning_rate: 2.0e-05
+  max_length: 128
+  model_name: roberta-base
+  num_classes: 3
+  num_training_steps: 530
+  warmup_steps: 53
+  weight_decay: 0.01
