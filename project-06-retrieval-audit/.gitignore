@@ -22,3 +22,6 @@ __pycache__/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# pyserini environment for the Anserini replication (Stage 3)
+venv-anserini/

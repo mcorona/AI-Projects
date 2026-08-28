@@ -25,7 +25,12 @@ both stages were measured.
 For fusion, across **six BEIR corpora** and two dense retrievers of
 different strength — 12 (corpus, retriever) pairs — the correlation between
 a retriever's existing advantage over BM25 and the benefit it gets from
-fusion is **−0.867**.
+fusion is **−0.832** on Anserini, the reference BM25 implementation
+(−0.867 on `rank_bm25`; the more conservative figure is the headline).
+
+The replication on Anserini is reported in full below, because it did not
+simply confirm: it left the direction intact and **turned two of the
+significant "fusion hurts" results into nulls**.
 
 ---
 
@@ -114,12 +119,14 @@ legitimate spread between implementations. Observed: −0.0093 (SciFact),
 (TREC-COVID), and +0.0981 (ArguAna, where the BEIR paper reports 0.315 and
 Anserini around 0.397 against this pipeline's 0.4131).
 
-**This is the most serious limitation in the audit, and it cuts toward the
-conclusion rather than against it.** BM25 is half of every fusion measured
-here and it also defines the x-axis. Where `rank_bm25` is weaker than the
-reference — TREC-COVID by 6.4 points, NFCorpus by 1.7 — the computed gap is
-inflated *and* the fused run is handicapped, both in the direction that makes
-fusion look worse. ArguAna runs the other way, 9.8 points *stronger* than the BEIR
+**This was the most serious limitation in the audit, and it did cut toward
+the conclusion.** BM25 is half of every fusion measured here and it also
+defines the x-axis. Where `rank_bm25` is weaker than the reference the
+computed gap inflates *and* the fused run is handicapped, both in the
+direction that makes fusion look worse. Stage 3 replicated everything on
+Anserini and confirmed the concern was real: two significant results became
+null. The numbers in this section are kept as the `rank_bm25` record;
+Stage 3 carries the corrected picture. ArguAna runs the other way, 9.8 points *stronger* than the BEIR
 paper's figure, which is reassuring only in that the bias is not systematic.
 
 That ArguAna gap is unexplained and worth naming. Both dense retrievers
@@ -128,9 +135,8 @@ path rather than in the corpus handling or the self-match exclusion. The
 most likely candidates are tokenization of 193-word queries and whether the
 reference figure excludes the query's own document. It was not chased down.
 
-A replication on Anserini would be the single highest-value follow-up, and
-until it exists the effect sizes here should be read as approximate even
-where the signs are not in doubt.
+That replication was done — see Stage 3 — and it resolved the ArguAna gap
+as a difference in evaluation convention rather than a defect.
 
 **Provenance of the reference values.** Fetched from primary sources on
 2026-08-28, not transcribed from memory:
@@ -259,6 +265,87 @@ answer.
 
 ---
 
+## Stage 3: the replication on Anserini
+
+The earlier version of this audit named one follow-up as its highest-value
+open item — rerun everything against the BM25 implementation the published
+figures come from, because `rank_bm25` is not it and BM25 sits on both axes
+of the headline relationship. This is that replication: Anserini's prebuilt
+BEIR Lucene indexes via pyserini, k1 = 0.9 and b = 0.4, the same parameters
+`rank_bm25` was given.
+
+### It reproduced both anomalies, which relocated the problem
+
+| Corpus | `rank_bm25` | Anserini | BEIR published | Anserini Δ |
+|---|---:|---:|---:|---:|
+| FiQA | 0.2374 | 0.2361 | 0.236 | +0.0001 |
+| NFCorpus | 0.3085 | 0.3218 | 0.325 | −0.0032 |
+| SciDocs | 0.1477 | 0.1490 | 0.158 | −0.0090 |
+| SciFact | 0.6557 | 0.6789 | 0.665 | +0.0139 |
+| TREC-COVID | 0.5917 | 0.5947 | 0.656 | **−0.0613** |
+| ArguAna | 0.4131 | 0.4005 | 0.315 | **+0.0855** |
+
+The two outliers survive the change of implementation, so `rank_bm25` was
+never their cause. Both were then chased directly.
+
+**ArguAna is resolved.** Running Anserini *without* the self-match exclusion
+gives **0.2999** against a published 0.315 — ordinary spread. With the
+exclusion it gives 0.4005. So the BEIR paper's ArguAna BM25 figure counts
+the query's own document as a retrieval result, and this audit does not.
+That is a difference in evaluation convention, not a defect, and it is worth
+noting that MTEB appears to take the other side: both dense retrievers
+reproduce MTEB on ArguAna to within 0.0013 *with* the exclusion applied. The
+two reference sources do not agree with each other on this corpus.
+
+**TREC-COVID is not resolved.** The obvious candidate was the index type —
+BEIR's figures are sometimes produced from a multifield index rather than a
+flat one. Tested: the multifield index gives **0.5302**, further from the
+published 0.656, not closer. The 6-point gap remains unexplained and is
+carried as an open item rather than a rounded-off one.
+
+### And it weakened the result
+
+| Corpus | Dense | Gap (Anserini) | Δ fusion | p | (was, on `rank_bm25`) |
+|---|---|---:|---:|---:|---|
+| TREC-COVID | MiniLM | −0.1224 | **+0.2129** | <0.0001 | +0.2088 |
+| SciFact | MiniLM | −0.0338 | **+0.0754** | <0.0001 | +0.0493 |
+| NFCorpus | MiniLM | −0.0053 | **+0.0386** | <0.0001 | +0.0200 |
+| NFCorpus | bge | +0.0525 | −0.0022 | 0.7160 | **−0.0193, p=0.011** |
+| SciFact | bge | +0.0615 | −0.0036 | 0.7624 | **−0.0355, p=0.010** |
+| SciDocs | MiniLM | +0.0674 | **−0.0191** | <0.0001 | −0.0207 |
+| SciDocs | bge | +0.0682 | **−0.0229** | <0.0001 | −0.0252 |
+| ArguAna | MiniLM | +0.1018 | −0.0076 | 0.2756 | −0.0026 |
+| FiQA | MiniLM | +0.1326 | −0.0008 | 0.9202 | −0.0086 |
+| FiQA | bge | +0.1702 | **−0.0413** | <0.0001 | −0.0474 |
+| TREC-COVID | bge | +0.1860 | +0.0261 | 0.2794 | −0.0180 |
+| ArguAna | bge | +0.2383 | **−0.0787** | <0.0001 | −0.0798 |
+
+**Two results that were significant became null.** On SciFact and NFCorpus,
+"fusion hurts bge" (p = 0.010 and p = 0.011) becomes "no measurable effect"
+(p = 0.76 and p = 0.72). Anserini's BM25 is stronger than `rank_bm25` on
+both corpora — 0.6789 against 0.6557, and 0.3218 against 0.3085 — which
+shrinks the gap and, exactly as the rule predicts, makes fusion less
+harmful. The earlier caveat that this bias "cuts toward the conclusion" was
+right, and the effect was material rather than decorative.
+
+What survives: the direction, the boundary, and the extremes. Every
+significant gain still sits at a gap at or below zero; every significant
+loss still sits at +0.067 or above; the crossover band is if anything
+cleaner than before. Correlation moves from −0.867 to **−0.832**.
+
+What does not survive: the claim that fusion significantly harms a strong
+dense retriever on *four* corpora. On the reference implementation it is
+**three** — SciDocs, FiQA and ArguAna — with SciFact and NFCorpus null and
+TREC-COVID's bge row flipping sign while staying null.
+
+```bash
+./venv-anserini/bin/python -m src.evaluation.run_anserini          # needs a JVM
+python -m src.evaluation.run_anserini_fusion
+```
+
+
+---
+
 ## Method
 
 Seven BEIR corpora were selected in advance, with the reason for each
@@ -290,7 +377,13 @@ python -m src.evaluation.run_stage1      # fusion: five arms, six corpora
 python -m src.evaluation.reference       # validation against published
 python -m src.evaluation.run_stage2      # reranking: four arms, four corpora
 python -m src.evaluation.run_stage2 --second-reranker --datasets nfcorpus
+
+./venv-anserini/bin/python -m src.evaluation.run_anserini   # needs a JVM
+python -m src.evaluation.run_anserini_fusion
 ```
+
+Stage 3 needs a separate virtualenv: pyserini pulls a JDK dependency and
+several hundred megabytes of wheels the rest of the project has no use for.
 
 About 12 minutes for Stage 1 and 25 for Stage 2 on an M-series Mac with
 embeddings cached. Stage 2 writes its report after every corpus, so an
@@ -301,9 +394,14 @@ interrupt costs the corpus in flight rather than the run.
 ## Limits
 
 - **Six corpora, two retrievers, twelve comparisons.** The rule is a
-  hypothesis with good support, not an established result. Adding two
-  corpora moved the correlation from −0.913 to **−0.867**: more evidence made
-  the pattern slightly weaker, not stronger.
+  hypothesis with reasonable support, not an established result. Every time
+  the evidence base widened, the pattern got slightly weaker: −0.913 on four
+  corpora, −0.867 on six, **−0.832** once BM25 came from the reference
+  implementation. That direction of drift is worth watching.
+- **TREC-COVID's BM25 is 6 points below the published figure on the
+  reference implementation, and nobody knows why.** The index-type
+  hypothesis was tested and rejected. Two of the twelve pairs rest on that
+  corpus.
 - **Quora was not run.** It is the case that would have stressed the rule
   hardest — question-to-question retrieval, where the dense advantage should
   be the largest in the set — and its absence is the most consequential gap

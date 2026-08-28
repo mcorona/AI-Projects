@@ -1,0 +1,73 @@
+{
+  "k1": 0.9,
+  "b": 0.4,
+  "source": "pyserini prebuilt beir-v1.0.0 *.flat",
+  "datasets": [
+    {
+      "dataset": "scifact",
+      "label": "SciFact",
+      "indexed_docs": 5183,
+      "corpus_docs": 5183,
+      "ndcg@10": 0.6789094274508312,
+      "recall@100": 0.9253333333333335,
+      "published": 0.665,
+      "delta_vs_published": 0.013909427450831124,
+      "seconds": 6.4
+    },
+    {
+      "dataset": "nfcorpus",
+      "label": "NFCorpus",
+      "indexed_docs": 3633,
+      "corpus_docs": 3633,
+      "ndcg@10": 0.32178412189448596,
+      "recall@100": 0.24567317497356,
+      "published": 0.325,
+      "delta_vs_published": -0.0032158781055140473,
+      "seconds": 0.3
+    },
+    {
+      "dataset": "arguana",
+      "label": "ArguAna",
+      "indexed_docs": 8674,
+      "corpus_docs": 8674,
+      "ndcg@10": 0.4005172488262588,
+      "recall@100": 0.9324324324324325,
+      "published": 0.315,
+      "delta_vs_published": 0.08551724882625877,
+      "seconds": 5.1
+    },
+    {
+      "dataset": "scidocs",
+      "label": "SciDocs",
+      "indexed_docs": 25657,
+      "corpus_docs": 25657,
+      "ndcg@10": 0.14904809869978664,
+      "recall@100": 0.34773333333333334,
+      "published": 0.158,
+      "delta_vs_published": -0.008951901300213366,
+      "seconds": 8.9
+    },
+    {
+      "dataset": "trec-covid",
+      "label": "TREC-COVID",
+      "indexed_docs": 171331,
+      "corpus_docs": 171332,
+      "ndcg@10": 0.5946917010118077,
+      "recall@100": 0.10909797387983748,
+      "published": 0.656,
+      "delta_vs_published": -0.061308298988192345,
+      "seconds": 8.9
+    },
+    {
+      "dataset": "fiqa",
+      "label": "FiQA-2018",
+      "indexed_docs": 57600,
+      "corpus_docs": 57638,
+      "ndcg@10": 0.2360668075849401,
+      "recall@100": 0.5394860497869757,
+      "published": 0.236,
+      "delta_vs_published": 6.680758494012617e-05,
+      "seconds": 3.9
+    }
+  ]
+}
