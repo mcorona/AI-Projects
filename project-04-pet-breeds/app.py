@@ -51,14 +51,36 @@ def all_metrics():
     return out
 
 
-@st.cache_resource(show_spinner="Loading the fine-tuned model ...")
-def load_model():
+@st.cache_resource(show_spinner="Loading models ...")
+def load_models():
+    """
+    The shipped model is the LINEAR PROBE, not the fine-tune.
+
+    The fine-tuned network scored 0.9120 on the held-out test split against
+    the probe's 0.9283 (paired McNemar p = 1.9e-4) and is an order of
+    magnitude worse calibrated. Serving it because it sounds more impressive
+    would mean shipping the worse model on purpose. It is loaded anyway, and
+    shown beside the probe, because the disagreement is the point.
+    """
+    import pickle
     import torch
+    import torch.nn as nn
     from src.data.loader import pick_device
+    from src.models.backbone import build_backbone
     from src.models.train import load_finetuned
+
     device = pick_device() if torch.backends.mps.is_available() else "cpu"
-    model, ckpt = load_finetuned(device)
-    return model, ckpt, device
+
+    feature_net, _ = build_backbone()
+    feature_net.fc = nn.Identity()
+    feature_net.eval().to(device)
+    with open(MODELS / "linear_probe.pkl", "rb") as f:
+        probe = pickle.load(f)
+
+    finetuned = None
+    if (MODELS / "resnet50_finetuned.pt").exists():
+        finetuned, _ = load_finetuned(device)
+    return feature_net, probe, finetuned, device
 
 
 @st.cache_data
@@ -74,9 +96,9 @@ def class_info():
 def tab_classify():
     names, known, is_cat = class_info()
 
-    if not (MODELS / "resnet50_finetuned.pt").exists():
-        st.warning("No checkpoint found. Run "
-                   "`python -m src.models.run_training --stage finetune` first.")
+    if not (MODELS / "linear_probe.pkl").exists():
+        st.warning("No trained probe found. Run "
+                   "`python -m src.models.run_training --stage probe` first.")
         return
 
     uploaded = st.file_uploader("Upload a photo of a cat or dog",
@@ -96,28 +118,51 @@ def tab_classify():
     from src.data.loader import eval_transform
 
     img = Image.open(uploaded).convert("RGB")
-    model, ckpt, device = load_model()
+    feature_net, probe, finetuned, device = load_models()
     x = eval_transform()(img).unsqueeze(0).to(device)
+
     with torch.no_grad():
-        probs = torch.softmax(model(x), dim=1)[0].float().cpu().numpy()
+        feats = feature_net(x).float().cpu().numpy()
+        probs = probe.predict_proba(feats)[0]
+        ft_probs = (torch.softmax(finetuned(x), dim=1)[0].float().cpu().numpy()
+                    if finetuned is not None else None)
 
     left, right = st.columns([1, 1.4])
     with left:
-        st.image(img, use_container_width=True)
+        st.image(img, width="stretch")
     with right:
         order = np.argsort(-probs)[:5]
-        st.subheader(f"{names[order[0]]}")
+        st.subheader(names[order[0]])
         st.caption(f"confidence {probs[order[0]]:.1%}"
-                   + ("  ·  cat" if is_cat[order[0]] else "  ·  dog"))
+                   + ("  ·  cat" if is_cat[order[0]] else "  ·  dog")
+                   + ("  ·  ImageNet already named this breed" if known[order[0]]
+                      else "  ·  not an ImageNet-1k class"))
         rows = [{"Breed": names[i], "Confidence": f"{probs[i]:.1%}",
                  "In ImageNet-1k": "yes" if known[i] else "no"} for i in order]
         st.table(pd.DataFrame(rows).set_index("Breed"))
         if probs[order[0]] < 0.5:
             st.warning(
-                "Low confidence. On the held-out test set this model is much less "
-                "reliable below 50% confidence — see the calibration figures in "
-                "the Results tab."
+                "Low confidence. Below 50% this model is much less reliable — "
+                "see the reliability diagram in the Results tab, where the "
+                "low-confidence bands are also sparsely populated, so that "
+                "threshold is itself poorly estimated."
             )
+
+    st.caption(
+        "Served by the **linear probe** (test accuracy 0.9283), not the "
+        "fine-tuned network (0.9120). The cheaper model is the better one here."
+    )
+    if ft_probs is not None:
+        ft_top = int(np.argmax(ft_probs))
+        if ft_top != order[0]:
+            st.info(
+                f"The fine-tuned network disagrees: it says **{names[ft_top]}** "
+                f"({ft_probs[ft_top]:.1%}). On the held-out test split it is right "
+                f"1.6 points less often than the probe (p = 1.9e-4)."
+            )
+        else:
+            st.caption(f"The fine-tuned network agrees ({ft_probs[ft_top]:.1%} "
+                       f"confidence against the probe's {probs[order[0]]:.1%}).")
 
 
 # --- Tab 2: results -------------------------------------------------------
@@ -161,7 +206,14 @@ def tab_results():
             "average gap between the two, weighted by how many predictions land "
             "in each confidence band."
         )
-        st.dataframe(pd.DataFrame(ft["calibration_bins"]), hide_index=True)
+        # st.table, not st.dataframe: the interactive grid squeezes every
+        # numeric column into an unreadable strip instead of auto-sizing.
+        bins = pd.DataFrame(ft["calibration_bins"])
+        bins["band"] = bins.apply(lambda r: f"{r['lo']:.2f}-{r['hi']:.2f}", axis=1)
+        bins = bins[["band", "n", "confidence", "accuracy"]]
+        for c in ("confidence", "accuracy"):
+            bins[c] = bins[c].map("{:.3f}".format)
+        st.table(bins.set_index("band"))
 
     if ft:
         st.subheader("Where it still fails")
@@ -201,11 +253,11 @@ def tab_imagenet():
         st.table(pd.DataFrame(rows).set_index("Model"))
 
     st.subheader("The 37 breeds")
-    st.dataframe(pd.DataFrame({
+    st.table(pd.DataFrame({
         "Breed": names,
         "Species": ["cat" if c else "dog" for c in is_cat],
         "In ImageNet-1k": ["yes" if k else "no" for k in known],
-    }), hide_index=True, height=420)
+    }).sort_values(["In ImageNet-1k", "Species", "Breed"]).set_index("Breed"))
 
 
 st.title("Pet breeds, and what ImageNet already knew")

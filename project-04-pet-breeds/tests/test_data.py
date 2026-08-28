@@ -58,3 +58,27 @@ def test_real_splits_are_disjoint_and_test_is_untouched():
     assert len(train) + len(val) == 3680      # official trainval size
     assert len(test) == 3669                  # official test size
     assert len(np.unique(labels_of(test))) == 37
+
+
+def test_mcnemar_ignores_concordant_items():
+    """A test that counted agreements would call these two models different."""
+    import numpy as np
+    from src.evaluation.significance import mcnemar_exact
+    labels = np.zeros(100, dtype=int)
+    a = np.zeros(100, dtype=int)      # right on everything
+    b = np.zeros(100, dtype=int)
+    b[:2] = 1                          # wrong on exactly 2
+    r = mcnemar_exact(a, b, labels)
+    assert r["discordant"] == 2 and r["a_only"] == 2 and r["b_only"] == 0
+    assert r["p_value"] == 0.5         # 2 discordant, all one way: 2 * (1/4)
+
+
+def test_mcnemar_is_symmetric_in_p():
+    import numpy as np
+    from src.evaluation.significance import mcnemar_exact
+    labels = np.zeros(50, dtype=int)
+    a, b = np.zeros(50, dtype=int), np.zeros(50, dtype=int)
+    a[:5] = 1
+    b[5:12] = 1
+    assert mcnemar_exact(a, b, labels)["p_value"] == \
+           mcnemar_exact(b, a, labels)["p_value"]
