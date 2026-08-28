@@ -232,11 +232,53 @@ the committed held-out predictions with no dataset or model file.
 
 ---
 
+---
+
+## And separately: an audit
+
+### [When Hybrid Retrieval Hurts](project-06-retrieval-audit/) — independent evaluation
+
+Not a sixth project. The five above evaluate systems I built; this one
+evaluates a recommendation that retrieval tooling ships as a default and
+that 2026 practitioner guidance repeats without conditions:
+
+> *"Hybrid search consistently outperforms either method alone."*
+> *"Add a cross-encoder reranker after fusion for the biggest single precision gain."*
+
+Both are true on one side of a boundary the guidance never states.
+
+| Where the dense retriever stands | What fusion does to it |
+|---|---|
+| Behind or level with BM25 | **Helps** — up to +0.21 nDCG |
+| Ahead by 0.07 nDCG or more | **Hurts** — up to −0.08 nDCG |
+
+Across **six BEIR corpora** and two dense retrievers of different strength,
+the correlation between a retriever's existing advantage over BM25 and the
+benefit it gets from fusion is **−0.832**. Reranking fails on the same
+boundary, for the same reason. On four corpora, applying *both* recommended
+steps produced a significantly worse retriever than applying neither.
+
+**The part worth reading is the third stage.** The audit's own BM25 was
+`rank_bm25`, not the implementation the published figures come from — so it
+was replicated on Anserini. That replication did not confirm: it turned two
+of the significant results into nulls and moved the headline correlation
+from −0.867 to −0.832. The report leads with the weaker number and says why.
+
+Two defects in its own pipeline are documented rather than quietly fixed —
+including one that biased results *toward* its own hypothesis and was caught
+only by comparing against a published figure. Every reference value is
+verified against its primary source, and one anomaly is left explicitly
+unexplained.
+
+**Stack:** pyserini / Anserini (Lucene) · rank-bm25 · sentence-transformers · cross-encoders · NumPy · SciPy
+
+---
+
 ## Running them
 
 Each project is self-contained with its own `README.md`, `requirements.txt`, and
-setup steps — including how to fetch the dataset, which is gitignored in all
-five (Projects 3, 4 and 5 download theirs on first run).
+setup steps — including how to fetch the dataset, which is gitignored
+throughout (Projects 3, 4, 5 and the audit download theirs on first run).
 
 ```bash
 cd project-01-customer-feedback-nlp   # or project-02-... through -05-...
