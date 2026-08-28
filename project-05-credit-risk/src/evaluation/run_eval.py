@@ -174,6 +174,24 @@ def main() -> None:
               f"[{r['ci_low']:+.4f}, {r['ci_high']:+.4f}]"
               f"   McNemar p={v['mcnemar_on_decisions']['p_value']:.2e}")
 
+    # ---- the scored test split, small enough to commit ---------------
+    # 7,500 rows of scores and attributes, ~100 KB gzipped. Committing it
+    # means the dashboard recomputes every threshold, cost and disparity in
+    # this project from the actual held-out predictions rather than
+    # redisplaying a summary -- and that anyone can re-derive the tables
+    # below without refitting anything.
+    scores = pd.DataFrame({
+        "default": y,
+        "exposure": exposure,
+        "SEX": test["SEX"].to_numpy(),
+        "AGE_BAND": test["AGE_BAND"].to_numpy(),
+        "EDUCATION": test["EDUCATION"].to_numpy(),
+        **{f"p_{k}": np.round(v, 6) for k, v in probs.items()},
+        "p_blinded": np.round(p_blind, 6),
+    })
+    scores.to_csv(REPORTS / "test_scores.csv.gz", index=False,
+                  compression="gzip")
+
     REPORTS.mkdir(parents=True, exist_ok=True)
     (REPORTS / "test_results.json").write_text(json.dumps({
         "n_test": int(len(test)),
@@ -194,8 +212,10 @@ def main() -> None:
         "audit": audit,
         "blinded": blinded,
     }, indent=2))
-    print(f"\nwrote {(REPORTS / 'test_results.json').relative_to(ROOT)} "
-          f"and {(REPORTS / 'fairness.json').relative_to(ROOT)}")
+    kb = (REPORTS / "test_scores.csv.gz").stat().st_size / 1024
+    print(f"\nwrote {(REPORTS / 'test_results.json').relative_to(ROOT)}, "
+          f"{(REPORTS / 'fairness.json').relative_to(ROOT)} and "
+          f"{(REPORTS / 'test_scores.csv.gz').relative_to(ROOT)} ({kb:.0f} KB)")
 
 
 if __name__ == "__main__":

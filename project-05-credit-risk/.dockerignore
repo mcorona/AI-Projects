@@ -1,0 +1,29 @@
+# Local environment
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Version control
+.git/
+.gitignore
+
+# The dataset and the fitted models. The dashboard reads neither -- it
+# works from output/reports/test_scores.csv.gz, which is committed.
+data/
+output/models/
+
+# Notebooks, tests, docs
+notebooks/
+tests/
+src/
+.ipynb_checkpoints/
+*.md
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp

@@ -156,7 +156,7 @@
       "base_rate": 0.2212,
       "brier": 0.13272095914978332,
       "ece": 0.02336221688894342,
-      "mean_predicted": 0.22305998388663434,
+      "mean_predicted": 0.2230599838866344,
       "observed_rate": 0.2212,
       "threshold_from_validation": 0.129,
       "rates": {
@@ -1370,14 +1370,14 @@
         "bin_low": 0.2,
         "bin_high": 0.30000000000000004,
         "n": 1058,
-        "mean_predicted": 0.23979455194905783,
+        "mean_predicted": 0.23979455194905785,
         "observed_rate": 0.21928166351606806
       },
       {
         "bin_low": 0.30000000000000004,
         "bin_high": 0.4,
         "n": 518,
-        "mean_predicted": 0.34728641238432373,
+        "mean_predicted": 0.3472864123843238,
         "observed_rate": 0.3764478764478765
       },
       {
