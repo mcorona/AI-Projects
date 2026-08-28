@@ -1,0 +1,24 @@
+# BEIR corpora and cached embeddings -- downloaded by src/data/beir.py.
+# Anchored so it cannot also match src/data/.
+/data/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Testing
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
