@@ -15,8 +15,15 @@ without conditions.
 >
 > "Start with RRF at k=60 as the zero-config default."
 
-**The finding:** the claim is true, and it is true only on one side of a
-boundary the guidance never mentions. Fusing BM25 into a dense retriever
+**The finding:** both halves of that advice are true on one side of a
+boundary the guidance never mentions, and false on the other. Fusion and
+reranking each help a first stage that is not already strong, and each
+degrade one that is. Applying both to a modern dense retriever produced a
+**significantly worse** system than applying neither, on all four corpora
+tested.
+
+The fusion half in detail: the claim is true, and it is true only on one side
+of a boundary the guidance never mentions. Fusing BM25 into a dense retriever
 helps when that retriever is not already beating BM25, and hurts — by more
 than the fusion ever gains — when it is. On four BEIR corpora with two
 dense retrievers of different strength, the correlation between a
@@ -132,6 +139,91 @@ the reason it comes before the results and not after.
 
 ---
 
+## Stage 2: the reranker
+
+The other half of the same guidance:
+
+> "Add a cross-encoder reranker after fusion for the biggest single
+> precision gain."
+
+Also unconditional. Same four corpora, `ms-marco-MiniLM-L-6-v2` over the
+top 50, paired bootstrap.
+
+### The control comes first
+
+A cross-encoder over a weak lexical first stage is the textbook case where
+reranking shines. If that does not gain, the reranker is misconfigured and
+nothing else in this stage means anything.
+
+| Corpus | BM25 | + reranker | Δ | p |
+|---|---:|---:|---:|---:|
+| FiQA | 0.2374 | 0.3239 | **+0.0865** | <0.0001 |
+| NFCorpus | 0.3085 | 0.3363 | **+0.0278** | <0.0001 |
+| SciFact | 0.6557 | 0.6808 | +0.0252 | 0.0970 |
+| ArguAna | 0.4131 | 0.4250 | +0.0119 | 0.2048 |
+
+It gains **36% relative** on FiQA, reproducing Project 3's figure exactly.
+The reranker works. Note also that the two corpora where it fails to gain
+significantly are the two where BM25 is already strong — the same boundary
+Stage 1 found.
+
+### And then it degrades the strong first stage, everywhere
+
+| Corpus | bge-base | + reranker | Δ | p |
+|---|---:|---:|---:|---:|
+| NFCorpus | 0.3743 | 0.3582 | **−0.0161** | 0.0356 |
+| FiQA | 0.4062 | 0.3851 | **−0.0212** | 0.0146 |
+| SciFact | 0.7404 | 0.7013 | **−0.0391** | 0.0062 |
+| ArguAna | 0.6388 | 0.4316 | **−0.2073** | <0.0001 |
+
+Four corpora, four significant losses.
+
+### The full recommended stack against doing neither
+
+Fuse BM25 with the dense retriever, then rerank the result — exactly what
+the guidance prescribes — measured against the plain dense retriever it is
+supposed to improve:
+
+| Corpus | bge alone | Fused + reranked | Δ | p |
+|---|---:|---:|---:|---:|
+| NFCorpus | 0.3743 | 0.3583 | **−0.0160** | 0.0486 |
+| FiQA | 0.4062 | 0.3743 | **−0.0319** | 0.0008 |
+| SciFact | 0.7404 | 0.6958 | **−0.0446** | 0.0032 |
+| ArguAna | 0.6388 | 0.4245 | **−0.2143** | <0.0001 |
+
+**Four corpora, four significant losses.** Following both recommendations
+produced a worse retriever than following neither, every time, on a modern
+dense retriever.
+
+### Two mechanisms, not one
+
+The tidy story would be that everything reduces to first-stage strength.
+It mostly does — but ArguAna does not fit, and forcing it in would be
+overclaiming.
+
+There, reranking degrades *every* arm it touches, including the weak MiniLM
+(−0.0653, p<0.0001), and it destroys bge, costing a third of its score. The
+likely reason is structural rather than about strength: ArguAna's task is to
+retrieve a *counter*-argument, while a cross-encoder trained on MS MARCO
+scores topical relevance. Its notion of a good match is close to the
+opposite of the task's. That is a second failure mode — reranker/task
+mismatch — and it is not the same as the first.
+
+So: reranking helps a weak first stage on a task its training resembles, and
+hurts otherwise. Two conditions, neither of them stated in the guidance.
+
+### The second reranker
+
+`bge-reranker-base` was run on NFCorpus only, to check that a degradation is
+not simply one badly chosen model. It hurt bge there too, and harder:
+**−0.0473, p<0.0001**, against ms-marco's −0.0161. It was not run on the
+other three corpora — it is roughly nine times slower per pair, and one
+corpus carrying both rerankers already answers the objection it exists to
+answer.
+
+
+---
+
 ## Method
 
 Seven BEIR corpora were selected in advance, with the reason for each
@@ -152,11 +244,15 @@ corpus can show it helping one retriever and hurting another.
 
 ```bash
 python -m src.data.beir                  # download + inventory
-python -m src.evaluation.run_stage1      # the five arms, four corpora
+python -m src.evaluation.run_stage1      # fusion: five arms, four corpora
 python -m src.evaluation.reference       # validation against published
+python -m src.evaluation.run_stage2      # reranking: four arms, four corpora
+python -m src.evaluation.run_stage2 --second-reranker --datasets nfcorpus
 ```
 
-Reproduces on an M-series Mac in about 12 minutes with embeddings cached.
+About 12 minutes for Stage 1 and 25 for Stage 2 on an M-series Mac with
+embeddings cached. Stage 2 writes its report after every corpus, so an
+interrupt costs the corpus in flight rather than the run.
 
 ---
 
@@ -173,9 +269,10 @@ Reproduces on an M-series Mac in about 12 minutes with embeddings cached.
 - **RRF k=60, equal weights, top-100 only.** Weighted or tuned fusion might
   behave differently, and the guidance recommends convex combination once
   labelled data exists. Untested.
-- **Reranking is not measured.** The same guidance recommends adding a
-  cross-encoder after fusion; Project 3 found that reranking also degraded a
-  strong first stage. That is a separate claim and a separate stage.
+- **Reranking: one cross-encoder on four corpora, a second on one.** Depth
+  50, and depth is a parameter that was not varied. A reranker with a
+  different training mix might behave differently on ArguAna, where the
+  failure looks task-shaped rather than strength-shaped.
 - **The reference values are unverified**, as stated above.
 
 ---
