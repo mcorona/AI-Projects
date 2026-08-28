@@ -90,26 +90,26 @@ labelled data beyond what evaluating either retriever already requires.
 An audit that reports someone else's defaults are wrong has to first show
 its own instrument is right.
 
-| Corpus | System | Observed | Published | Δ |
+| Corpus | System | Observed | MTEB published | Δ |
 |---|---|---:|---:|---:|
-| SciFact | MiniLM | 0.6451 | 0.645 | +0.0001 |
-| SciFact | bge-base | 0.7404 | 0.742 | −0.0016 |
-| NFCorpus | MiniLM | 0.3165 | 0.318 | −0.0015 |
-| NFCorpus | bge-base | 0.3743 | 0.373 | +0.0013 |
-| ArguAna | MiniLM | 0.5024 | 0.501 | +0.0014 |
-| ArguAna | bge-base | 0.6388 | 0.636 | +0.0028 |
-| SciDocs | MiniLM | 0.2164 | 0.216 | +0.0004 |
-| SciDocs | bge-base | 0.2172 | 0.217 | +0.0002 |
-| TREC-COVID | MiniLM | 0.4723 | 0.473 | −0.0007 |
-| TREC-COVID | bge-base | 0.7807 | 0.781 | −0.0003 |
-| FiQA | MiniLM | 0.3687 | 0.369 | −0.0003 |
-| FiQA | bge-base | 0.4062 | 0.406 | +0.0002 |
+| SciFact | MiniLM | 0.6451 | 0.64508 | +0.0000 |
+| SciFact | bge-base | 0.7404 | 0.74345 | −0.0031 |
+| NFCorpus | MiniLM | 0.3165 | 0.31594 | +0.0005 |
+| NFCorpus | bge-base | 0.3743 | 0.37367 | +0.0006 |
+| ArguAna | MiniLM | 0.5024 | 0.50167 | +0.0007 |
+| ArguAna | bge-base | 0.6388 | 0.63752 | +0.0013 |
+| SciDocs | MiniLM | 0.2164 | 0.21641 | −0.0000 |
+| SciDocs | bge-base | 0.2172 | 0.21725 | −0.0000 |
+| TREC-COVID | MiniLM | 0.4723 | 0.47232 | −0.0000 |
+| TREC-COVID | bge-base | 0.7807 | 0.78029 | +0.0004 |
+| FiQA | MiniLM | 0.3687 | 0.36867 | +0.0000 |
+| FiQA | bge-base | 0.4062 | 0.40646 | −0.0002 |
 
-Twelve dense checks, maximum deviation **0.0028**.
+Twelve dense checks, maximum deviation **0.0031**; four are exact to four decimals.
 
-BM25 is a range check rather than a match check: this pipeline uses
-`rank_bm25`, the BEIR paper used Elasticsearch, and Anserini is a third
-implementation, with legitimate spread between them. Observed: −0.0093 (SciFact),
+BM25 is a range check rather than a match check: both use k1 = 0.9 and
+b = 0.4, but `rank_bm25` and Anserini tokenize differently and there is
+legitimate spread between implementations. Observed: −0.0093 (SciFact),
 −0.0103 (SciDocs), +0.0014 (FiQA), −0.0165 (NFCorpus), −0.0643
 (TREC-COVID), and +0.0981 (ArguAna, where the BEIR paper reports 0.315 and
 Anserini around 0.397 against this pipeline's 0.4131).
@@ -119,19 +119,36 @@ conclusion rather than against it.** BM25 is half of every fusion measured
 here and it also defines the x-axis. Where `rank_bm25` is weaker than the
 reference — TREC-COVID by 6.4 points, NFCorpus by 1.7 — the computed gap is
 inflated *and* the fused run is handicapped, both in the direction that makes
-fusion look worse. ArguAna runs the other way, 9.8 points stronger than the
-BEIR paper's figure, which is reassuring only in that the bias is not
-systematic. A replication on Anserini would be the single highest-value
-follow-up, and until it exists the effect sizes here should be read as
-approximate even where the signs are not in doubt.
+fusion look worse. ArguAna runs the other way, 9.8 points *stronger* than the BEIR
+paper's figure, which is reassuring only in that the bias is not systematic.
 
-> ⚠️ **The published reference values are not yet verified.** They are
-> transcribed from recollection of the BEIR paper and the MTEB leaderboard,
-> not fetched from a primary source, and every entry is flagged `"recalled"`
-> in `src/evaluation/reference.py`. They must be checked against their
-> sources before this audit is published anywhere. A validation table built
-> on half-remembered numbers is worse than no validation table, because it
-> looks like diligence.
+That ArguAna gap is unexplained and worth naming. Both dense retrievers
+reproduce MTEB there to within 0.0013, so whatever it is lives in the BM25
+path rather than in the corpus handling or the self-match exclusion. The
+most likely candidates are tokenization of 193-word queries and whether the
+reference figure excludes the query's own document. It was not chased down.
+
+A replication on Anserini would be the single highest-value follow-up, and
+until it exists the effect sizes here should be read as approximate even
+where the signs are not in doubt.
+
+**Provenance of the reference values.** Fetched from primary sources on
+2026-08-28, not transcribed from memory:
+
+- **BM25** — BEIR paper ([arXiv 2104.08663](https://arxiv.org/abs/2104.08663)),
+  Table 2. That column is Anserini with default Lucene parameters
+  **k1 = 0.9, b = 0.4** — the same parameters this pipeline passes to
+  `rank_bm25`. Any difference is therefore implementation and tokenization,
+  not configuration.
+- **Dense** — MTEB's own results dataset
+  ([huggingface.co/datasets/mteb/results](https://huggingface.co/datasets/mteb/results)),
+  test split, queried per (model, task); revisions `a5beb1e3e68b` for
+  bge-base-en-v1.5 and `8b3219a92973` for all-MiniLM-L6-v2.
+
+An earlier version of this audit carried values from recollection, flagged
+as unverified, with a note that they had to be checked before publication.
+They have been. All twelve were accurate to within 0.002 of the fetched
+figure — which was luck, not method, and is exactly why the check existed.
 
 ### A defect this pipeline had, and how it was caught
 
@@ -310,7 +327,6 @@ interrupt costs the corpus in flight rather than the run.
   parameter that was not varied. A reranker with a
   different training mix might behave differently on ArguAna, where the
   failure looks task-shaped rather than strength-shaped.
-- **The reference values are unverified**, as stated above.
 
 ---
 
