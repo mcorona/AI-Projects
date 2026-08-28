@@ -5,14 +5,16 @@ documented, honestly-evaluated system. Every project here includes baselines it
 has to beat, a held-out test set it was not tuned on, and a model card stating
 what it can't do.
 
-The through-line is **evaluation discipline**: in all four projects the
+The through-line is **evaluation discipline**: in all five projects the
 interesting result came from testing properly, not from picking a fancier
 model. In three of them the headline finding is that the sophisticated
 approach *lost* — a naive baseline matched ARIMA and an LSTM, a full RAG
 pipeline answered fewer questions correctly than the same model with no
 retrieval, and fine-tuning a ResNet-50 produced a significantly worse
-classifier than a logistic regression on its frozen features. Knowing that
-is worth more than a demo that looks good.
+classifier than a logistic regression on its frozen features. In the fifth,
+the metric itself was the problem: a credit model with a respectable AUC
+turns out to be worth exactly nothing once its decisions are priced.
+Knowing that is worth more than a demo that looks good.
 
 ---
 
@@ -161,19 +163,72 @@ Validation would not have caught it: the fine-tune *won* on validation
 
 ---
 
+### 5. [Credit Decisions, Priced](project-05-credit-risk/) — Tabular / Decision Analysis
+
+Default prediction on 30,000 credit-card accounts (UCI, Taiwan 2005), built
+to measure what sits between a model and a business: **the threshold, and
+what the two mistakes actually cost.** Declining a customer who would have
+paid costs the margin; approving one who defaults costs the balance. A 0.5
+cutoff is the buried claim that those are the same number.
+
+| Model | AUC | Cost | Cost at 0.5 | Saved vs no model |
+|---|---|---|---|---|
+| Delinquency rule (one column) | 0.7205 | 5841 | 8435 | **0** |
+| Logistic regression | 0.7377 | 5637 | 9598 | +204 |
+| Logistic, `class_weight="balanced"` | 0.7371 | 5663 | 5832 | +179 |
+| Random forest | 0.7926 | 4695 | 8061 | +1146 |
+| **Gradient boosting** | **0.7881** | **4713** | 7933 | **+1129** |
+
+**Three results.** First: **a model with AUC 0.72 is worth exactly nothing.**
+The one-column delinquency rule ranks respectably, but at this cost ratio its
+cheapest policy is to decline every applicant — which needs no model. It and
+the AUC-0.50 floor are worth identically zero, 0.22 of AUC apart.
+
+Second: **the threshold matters more than the model.** Deployed at 0.5, the
+best model costs 68% more than the same model at its own threshold, and loses
+to lending to nobody. Picking the model bought 1129; picking the threshold
+badly gives back 3220. And that holds across every plausible cost ratio — the
+0.5 penalty is +34% at R=5 and +261% at R=20, and vanishes only at R=1, which
+is the assumption 0.5 encodes.
+
+Third: **`class_weight="balanced"` does nothing and looks like it does a
+lot.** Against the plain logistic regression every difference is null (AUC
+−0.0007, regret +0.0034, McNemar p=0.38) — but compared at a 0.5 cutoff it
+appears 39% better, purely because the weighting relocated the probabilities.
+It bought that appearance with a calibration error four times larger.
+
+The fairness audit prices two interventions instead of assuming them:
+dropping the four protected attributes costs ~5% of the model's value and
+closes only 19% of the education gap (payment history proxies for it), while
+per-group thresholds cost 0.1–3% and close 98%. The reflex fix is the
+expensive, ineffective one — and the cheap one is mostly illegal, which is
+the trade rather than the answer.
+
+Also includes an exposure-weighted capacity policy (ranking by expected loss
+prevents 3.3× the money at 1% review capacity while catching *fewer*
+defaults), paired-bootstrap and exact-McNemar tests, and a Streamlit
+dashboard where the cost ratio is a slider — Dockerized, and running from
+the committed held-out predictions with no dataset or model file.
+
+**Stack:** scikit-learn · pandas · NumPy · SciPy · Streamlit · Plotly · Docker
+
+---
+
 ## What each project ships
 
-|  | Project 1 | Project 2 | Project 3 | Project 4 |
-|---|---|---|---|---|
-| Honest baselines | ✅ 3 | ✅ 2 | ✅ 4 | ✅ 3 |
-| Held-out test evaluation | ✅ | ✅ | ✅ | ✅ |
-| Error / regime analysis | ✅ | ✅ | ✅ | ✅ |
-| Statistical significance testing | — | — | ✅ | ✅ |
-| Validated against published results | — | — | ✅ | — |
-| Calibration analysis | — | — | — | ✅ |
-| Model card with limitations | ✅ | ✅ | ✅ | ✅ |
-| Serving layer | FastAPI + Streamlit | Streamlit dashboard | Streamlit dashboard | Streamlit dashboard |
-| Docker | ✅ | ✅ | ✅ | ✅ |
+|  | Project 1 | Project 2 | Project 3 | Project 4 | Project 5 |
+|---|---|---|---|---|---|
+| Honest baselines | ✅ 3 | ✅ 2 | ✅ 4 | ✅ 3 | ✅ 2 |
+| Held-out test evaluation | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Error / regime analysis | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Statistical significance testing | — | — | ✅ | ✅ | ✅ |
+| Validated against published results | — | — | ✅ | — | — |
+| Calibration analysis | — | — | — | ✅ | ✅ |
+| Cost-sensitive decision analysis | — | — | — | — | ✅ |
+| Subgroup / fairness audit | — | — | — | — | ✅ |
+| Model card with limitations | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Serving layer | FastAPI + Streamlit | Streamlit dashboard | Streamlit dashboard | Streamlit dashboard | Streamlit dashboard |
+| Docker | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ---
 
@@ -181,10 +236,10 @@ Validation would not have caught it: the fine-tune *won* on validation
 
 Each project is self-contained with its own `README.md`, `requirements.txt`, and
 setup steps — including how to fetch the dataset, which is gitignored in all
-four (Projects 3 and 4 download theirs on first run).
+five (Projects 3, 4 and 5 download theirs on first run).
 
 ```bash
-cd project-01-customer-feedback-nlp   # or project-02-... / -03-... / -04-...
+cd project-01-customer-feedback-nlp   # or project-02-... through -05-...
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 ```

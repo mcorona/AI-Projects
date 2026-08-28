@@ -1,0 +1,561 @@
+{
+  "selected_model": "hist_gbm",
+  "threshold": 0.10200000000000001,
+  "audit": {
+    "SEX": {
+      "threshold": 0.10200000000000001,
+      "groups": [
+        {
+          "tp": 671.0,
+          "fp": 1385.0,
+          "fn": 72.0,
+          "tn": 889.0,
+          "n": 3017,
+          "flag_rate": 0.6814716605899901,
+          "recall": 0.9030955585464334,
+          "fpr": 0.6090589270008795,
+          "precision": 0.32636186770428016,
+          "accuracy": 0.5170699370235333,
+          "group": "1",
+          "positives": 743,
+          "base_rate": 0.24627113026184952,
+          "reliable": true,
+          "ece": 0.014624628151322445,
+          "mean_predicted": 0.24094031086826218,
+          "regret": 102027685.0,
+          "roc_auc": 0.7841105078060728,
+          "regret_per_account": 33817.595293337756,
+          "label": "Male"
+        },
+        {
+          "tp": 801.0,
+          "fp": 1925.0,
+          "fn": 115.0,
+          "tn": 1642.0,
+          "n": 4483,
+          "flag_rate": 0.6080749498103948,
+          "recall": 0.8744541484716157,
+          "fpr": 0.5396691897953463,
+          "precision": 0.2938371239911959,
+          "accuracy": 0.544947579745706,
+          "group": "2",
+          "positives": 916,
+          "base_rate": 0.20432745929065357,
+          "reliable": true,
+          "ece": 0.012380230396714535,
+          "mean_predicted": 0.20353760104812185,
+          "regret": 120982835.0,
+          "roc_auc": 0.7888123849993205,
+          "regret_per_account": 26987.025429399957,
+          "label": "Female"
+        }
+      ],
+      "gaps": {
+        "demographic_parity_gap": 0.07339671077959531,
+        "equal_opportunity_gap": 0.028641410074817686,
+        "false_positive_rate_gap": 0.06938973720553321,
+        "predictive_parity_gap": 0.03252474371308428,
+        "auc_gap": 0.004701877193247661,
+        "base_rate_gap": 0.041943670971195945,
+        "regret_per_account_gap": 6830.569863937799,
+        "n_groups_compared": 2
+      },
+      "cost_of_equal_opportunity": {
+        "metric_equalised": "recall",
+        "target": 0.8872814948764316,
+        "group_thresholds": {
+          "1": 0.108,
+          "2": 0.097
+        },
+        "global_threshold": 0.10200000000000001,
+        "regret_single_threshold": 4712.5,
+        "regret_group_thresholds": 4747.5,
+        "extra_regret": 35.0,
+        "extra_regret_pct": 0.7427055702917772,
+        "gaps_before": {
+          "demographic_parity_gap": 0.07339671077959531,
+          "equal_opportunity_gap": 0.028641410074817686,
+          "false_positive_rate_gap": 0.06938973720553321,
+          "predictive_parity_gap": 0.03252474371308428,
+          "auc_gap": 0.004701877193247661,
+          "base_rate_gap": 0.041943670971195945,
+          "regret_per_account_gap": 0.01625760219193617,
+          "n_groups_compared": 2
+        },
+        "gaps_after": {
+          "demographic_parity_gap": 0.028991118881620426,
+          "equal_opportunity_gap": 0.0006097668486662045,
+          "false_positive_rate_gap": 0.020692096194003473,
+          "predictive_parity_gap": 0.04357176757505249
+        },
+        "groups_compared": [
+          "1",
+          "2"
+        ],
+        "groups_excluded_as_too_small": []
+      },
+      "cost_of_demographic_parity": {
+        "metric_equalised": "flag_rate",
+        "target": 0.6376,
+        "group_thresholds": {
+          "1": 0.114,
+          "2": 0.096
+        },
+        "global_threshold": 0.10200000000000001,
+        "regret_single_threshold": 4712.5,
+        "regret_group_thresholds": 4765.0,
+        "extra_regret": 52.5,
+        "extra_regret_pct": 1.1140583554376657,
+        "gaps_before": {
+          "demographic_parity_gap": 0.07339671077959531,
+          "equal_opportunity_gap": 0.028641410074817686,
+          "false_positive_rate_gap": 0.06938973720553321,
+          "predictive_parity_gap": 0.03252474371308428,
+          "auc_gap": 0.004701877193247661,
+          "base_rate_gap": 0.041943670971195945,
+          "regret_per_account_gap": 0.01625760219193617,
+          "n_groups_compared": 2
+        },
+        "gaps_after": {
+          "demographic_parity_gap": 0.003979605198026093,
+          "equal_opportunity_gap": 0.019781424297813155,
+          "false_positive_rate_gap": 0.006220906536242077,
+          "predictive_parity_gap": 0.049130846038707154
+        },
+        "groups_compared": [
+          "1",
+          "2"
+        ],
+        "groups_excluded_as_too_small": []
+      }
+    },
+    "AGE_BAND": {
+      "threshold": 0.10200000000000001,
+      "groups": [
+        {
+          "tp": 480.0,
+          "fp": 1128.0,
+          "fn": 53.0,
+          "tn": 759.0,
+          "n": 2420,
+          "flag_rate": 0.6644628099173554,
+          "recall": 0.900562851782364,
+          "fpr": 0.5977742448330684,
+          "precision": 0.29850746268656714,
+          "accuracy": 0.5119834710743801,
+          "group": "21-29",
+          "positives": 533,
+          "base_rate": 0.22024793388429753,
+          "reliable": true,
+          "ece": 0.014408552012419163,
+          "mean_predicted": 0.22347520404479038,
+          "regret": 68290563.0,
+          "roc_auc": 0.7881480973303069,
+          "regret_per_account": 28219.24090909091,
+          "label": "21-29"
+        },
+        {
+          "tp": 502.0,
+          "fp": 1152.0,
+          "fn": 79.0,
+          "tn": 1058.0,
+          "n": 2791,
+          "flag_rate": 0.5926191329272662,
+          "recall": 0.8640275387263339,
+          "fpr": 0.5212669683257919,
+          "precision": 0.30350665054413545,
+          "accuracy": 0.5589394482264421,
+          "group": "30-39",
+          "positives": 581,
+          "base_rate": 0.20816911501254032,
+          "reliable": true,
+          "ece": 0.01463808091070988,
+          "mean_predicted": 0.20122428224596425,
+          "regret": 82090984.0,
+          "roc_auc": 0.7885012577783662,
+          "regret_per_account": 29412.749552131852,
+          "label": "30-39"
+        },
+        {
+          "tp": 331.0,
+          "fp": 705.0,
+          "fn": 45.0,
+          "tn": 545.0,
+          "n": 1626,
+          "flag_rate": 0.6371463714637147,
+          "recall": 0.8803191489361702,
+          "fpr": 0.564,
+          "precision": 0.3194980694980695,
+          "accuracy": 0.5387453874538746,
+          "group": "40-49",
+          "positives": 376,
+          "base_rate": 0.23124231242312424,
+          "reliable": true,
+          "ece": 0.021983566342701162,
+          "mean_predicted": 0.227285177130909,
+          "regret": 51072528.5,
+          "roc_auc": 0.7829117021276595,
+          "regret_per_account": 31409.919126691268,
+          "label": "40-49"
+        },
+        {
+          "tp": 159.0,
+          "fp": 325.0,
+          "fn": 10.0,
+          "tn": 169.0,
+          "n": 663,
+          "flag_rate": 0.7300150829562594,
+          "recall": 0.9408284023668639,
+          "fpr": 0.6578947368421053,
+          "precision": 0.3285123966942149,
+          "accuracy": 0.4947209653092006,
+          "group": "50+",
+          "positives": 169,
+          "base_rate": 0.2549019607843137,
+          "reliable": true,
+          "ece": 0.030338668652784027,
+          "mean_predicted": 0.25246352916521897,
+          "regret": 21556444.5,
+          "roc_auc": 0.7935222672064778,
+          "regret_per_account": 32513.490950226245,
+          "label": "50+"
+        }
+      ],
+      "gaps": {
+        "demographic_parity_gap": 0.13739595002899319,
+        "equal_opportunity_gap": 0.07680086364053007,
+        "false_positive_rate_gap": 0.13662776851631342,
+        "predictive_parity_gap": 0.030004934007647754,
+        "auc_gap": 0.010610565078818301,
+        "base_rate_gap": 0.04673284577177339,
+        "regret_per_account_gap": 4294.250041135336,
+        "n_groups_compared": 4
+      },
+      "cost_of_equal_opportunity": {
+        "metric_equalised": "recall",
+        "target": 0.8872814948764316,
+        "group_thresholds": {
+          "21-29": 0.107,
+          "30-39": 0.093,
+          "40-49": 0.1,
+          "50+": 0.126
+        },
+        "global_threshold": 0.10200000000000001,
+        "regret_single_threshold": 4712.5,
+        "regret_group_thresholds": 4719.0,
+        "extra_regret": 6.5,
+        "extra_regret_pct": 0.13793103448275862,
+        "gaps_before": {
+          "demographic_parity_gap": 0.13739595002899319,
+          "equal_opportunity_gap": 0.07680086364053007,
+          "false_positive_rate_gap": 0.13662776851631342,
+          "predictive_parity_gap": 0.030004934007647754,
+          "auc_gap": 0.010610565078818301,
+          "base_rate_gap": 0.04673284577177339,
+          "regret_per_account_gap": 0.03782566106204055,
+          "n_groups_compared": 4
+        },
+        "gaps_after": {
+          "demographic_parity_gap": 0.012906755724669372,
+          "equal_opportunity_gap": 0.000868228813221017,
+          "false_positive_rate_gap": 0.020968421052631525,
+          "predictive_parity_gap": 0.06275472545810468
+        },
+        "groups_compared": [
+          "21-29",
+          "30-39",
+          "40-49",
+          "50+"
+        ],
+        "groups_excluded_as_too_small": []
+      },
+      "cost_of_demographic_parity": {
+        "metric_equalised": "flag_rate",
+        "target": 0.6376,
+        "group_thresholds": {
+          "21-29": 0.108,
+          "30-39": 0.092,
+          "40-49": 0.10200000000000001,
+          "50+": 0.126
+        },
+        "global_threshold": 0.10200000000000001,
+        "regret_single_threshold": 4712.5,
+        "regret_group_thresholds": 4740.0,
+        "extra_regret": 27.5,
+        "extra_regret_pct": 0.583554376657825,
+        "gaps_before": {
+          "demographic_parity_gap": 0.13739595002899319,
+          "equal_opportunity_gap": 0.07680086364053007,
+          "false_positive_rate_gap": 0.13662776851631342,
+          "predictive_parity_gap": 0.030004934007647754,
+          "auc_gap": 0.010610565078818301,
+          "base_rate_gap": 0.04673284577177339,
+          "regret_per_account_gap": 0.03782566106204055,
+          "n_groups_compared": 4
+        },
+        "gaps_after": {
+          "demographic_parity_gap": 0.0013344597795673652,
+          "equal_opportunity_gap": 0.009525945728201535,
+          "false_positive_rate_gap": 0.01976661109788036,
+          "predictive_parity_gap": 0.06448647228789073
+        },
+        "groups_compared": [
+          "21-29",
+          "30-39",
+          "40-49",
+          "50+"
+        ],
+        "groups_excluded_as_too_small": []
+      }
+    },
+    "EDUCATION": {
+      "threshold": 0.10200000000000001,
+      "groups": [
+        {
+          "tp": 418.0,
+          "fp": 1023.0,
+          "fn": 89.0,
+          "tn": 1131.0,
+          "n": 2661,
+          "flag_rate": 0.5415257422021796,
+          "recall": 0.8244575936883629,
+          "fpr": 0.47493036211699163,
+          "precision": 0.2900763358778626,
+          "accuracy": 0.5821119879744457,
+          "group": "1",
+          "positives": 507,
+          "base_rate": 0.19052987598647125,
+          "reliable": true,
+          "ece": 0.01395990426448177,
+          "mean_predicted": 0.1833253197837743,
+          "regret": 82794582.5,
+          "roc_auc": 0.7838213021414222,
+          "regret_per_account": 31114.085869973693,
+          "label": "Graduate school"
+        },
+        {
+          "tp": 759.0,
+          "fp": 1667.0,
+          "fn": 66.0,
+          "tn": 982.0,
+          "n": 3474,
+          "flag_rate": 0.6983304548071387,
+          "recall": 0.92,
+          "fpr": 0.629294073235183,
+          "precision": 0.3128606760098928,
+          "accuracy": 0.5011514104778354,
+          "group": "2",
+          "positives": 825,
+          "base_rate": 0.2374784110535406,
+          "reliable": true,
+          "ece": 0.025375059360458047,
+          "mean_predicted": 0.24129013523859882,
+          "regret": 101197924.5,
+          "roc_auc": 0.7874754338400997,
+          "regret_per_account": 29130.087651122627,
+          "label": "University"
+        },
+        {
+          "tp": 291.0,
+          "fp": 591.0,
+          "fn": 32.0,
+          "tn": 332.0,
+          "n": 1246,
+          "flag_rate": 0.7078651685393258,
+          "recall": 0.9009287925696594,
+          "fpr": 0.6403033586132177,
+          "precision": 0.3299319727891156,
+          "accuracy": 0.5,
+          "group": "3",
+          "positives": 323,
+          "base_rate": 0.2592295345104334,
+          "reliable": true,
+          "ece": 0.043635248900940615,
+          "mean_predicted": 0.24321247527835965,
+          "regret": 36492009.0,
+          "roc_auc": 0.7697674496610528,
+          "regret_per_account": 29287.326645264846,
+          "label": "High school"
+        },
+        {
+          "tp": 4.0,
+          "fp": 29.0,
+          "fn": 0.0,
+          "tn": 86.0,
+          "n": 119,
+          "flag_rate": 0.2773109243697479,
+          "recall": 1.0,
+          "fpr": 0.25217391304347825,
+          "precision": 0.12121212121212122,
+          "accuracy": 0.7563025210084033,
+          "group": "4",
+          "positives": 4,
+          "base_rate": 0.03361344537815126,
+          "reliable": false,
+          "ece": 0.0563659600440916,
+          "mean_predicted": 0.08624061704138959,
+          "regret": 2526004.0,
+          "roc_auc": 0.9586956521739131,
+          "regret_per_account": 21226.9243697479,
+          "label": "Other/unknown"
+        }
+      ],
+      "gaps": {
+        "demographic_parity_gap": 0.16633942633714616,
+        "equal_opportunity_gap": 0.09554240631163713,
+        "false_positive_rate_gap": 0.1653729964962261,
+        "predictive_parity_gap": 0.039855636911253045,
+        "auc_gap": 0.017707984179046843,
+        "base_rate_gap": 0.06869965852396215,
+        "regret_per_account_gap": 1983.9982188510658,
+        "n_groups_compared": 3
+      },
+      "cost_of_equal_opportunity": {
+        "metric_equalised": "recall",
+        "target": 0.8872814948764316,
+        "group_thresholds": {
+          "1": 0.079,
+          "2": 0.117,
+          "3": 0.106,
+          "4": 0.001
+        },
+        "global_threshold": 0.10200000000000001,
+        "regret_single_threshold": 4712.5,
+        "regret_group_thresholds": 4856.0,
+        "extra_regret": 143.5,
+        "extra_regret_pct": 3.0450928381962865,
+        "gaps_before": {
+          "demographic_parity_gap": 0.16633942633714616,
+          "equal_opportunity_gap": 0.09554240631163713,
+          "false_positive_rate_gap": 0.1653729964962261,
+          "predictive_parity_gap": 0.039855636911253045,
+          "auc_gap": 0.017707984179046843,
+          "base_rate_gap": 0.06869965852396215,
+          "regret_per_account_gap": 0.044596826136093726,
+          "n_groups_compared": 3
+        },
+        "gaps_after": {
+          "demographic_parity_gap": 0.05709877826661891,
+          "equal_opportunity_gap": 0.0012721643681395944,
+          "false_positive_rate_gap": 0.06690969056783425,
+          "predictive_parity_gap": 0.07550956479264337
+        },
+        "groups_compared": [
+          "1",
+          "2",
+          "3"
+        ],
+        "groups_excluded_as_too_small": [
+          "4"
+        ]
+      },
+      "cost_of_demographic_parity": {
+        "metric_equalised": "flag_rate",
+        "target": 0.6376,
+        "group_thresholds": {
+          "1": 0.082,
+          "2": 0.117,
+          "3": 0.117,
+          "4": 0.05
+        },
+        "global_threshold": 0.10200000000000001,
+        "regret_single_threshold": 4712.5,
+        "regret_group_thresholds": 4794.0,
+        "extra_regret": 81.5,
+        "extra_regret_pct": 1.729442970822281,
+        "gaps_before": {
+          "demographic_parity_gap": 0.16633942633714616,
+          "equal_opportunity_gap": 0.09554240631163713,
+          "false_positive_rate_gap": 0.1653729964962261,
+          "predictive_parity_gap": 0.039855636911253045,
+          "auc_gap": 0.017707984179046843,
+          "base_rate_gap": 0.06869965852396215,
+          "regret_per_account_gap": 0.044596826136093726,
+          "n_groups_compared": 3
+        },
+        "gaps_after": {
+          "demographic_parity_gap": 0.004129275858914316,
+          "equal_opportunity_gap": 0.02039966225724743,
+          "false_positive_rate_gap": 0.02332829648230117,
+          "predictive_parity_gap": 0.08891177684049312
+        },
+        "groups_compared": [
+          "1",
+          "2",
+          "3"
+        ],
+        "groups_excluded_as_too_small": [
+          "4"
+        ]
+      }
+    }
+  },
+  "blinded": {
+    "features_removed": [
+      "SEX",
+      "EDUCATION",
+      "MARRIAGE",
+      "AGE"
+    ],
+    "n_features": 19,
+    "threshold_from_validation": 0.082,
+    "roc_auc": 0.7832129490571885,
+    "pr_auc": 0.5658164829437494,
+    "base_rate": 0.2212,
+    "brier": 0.1335580854809105,
+    "ece": 0.013835955074906271,
+    "mean_predicted": 0.21981246052180636,
+    "observed_rate": 0.2212,
+    "regret": 4960.0,
+    "vs_full_auc": {
+      "mean_difference": -0.004974514367244104,
+      "ci_low": -0.009523629047605484,
+      "ci_high": -0.0008056749242840443,
+      "n": 7500,
+      "bootstrap_samples": 2000,
+      "point_estimate": -0.004932035075781105
+    },
+    "vs_full_regret": {
+      "mean_difference": 0.03315943333333333,
+      "ci_low": 0.013928333333333334,
+      "ci_high": 0.05173333333333333,
+      "n": 7500,
+      "bootstrap_samples": 2000,
+      "point_estimate": 0.033,
+      "regret_a": 4960.0,
+      "regret_b": 4712.5
+    },
+    "gaps": {
+      "SEX": {
+        "demographic_parity_gap": 0.016312425735908964,
+        "equal_opportunity_gap": 0.009528525333975968,
+        "false_positive_rate_gap": 0.005106543195356417,
+        "predictive_parity_gap": 0.04938506130237791,
+        "auc_gap": 8.993439957805105e-05,
+        "base_rate_gap": 0.041943670971195945,
+        "regret_per_account_gap": 4514.489325822717,
+        "n_groups_compared": 2
+      },
+      "AGE_BAND": {
+        "demographic_parity_gap": 0.07723111293410789,
+        "equal_opportunity_gap": 0.051066977212640086,
+        "false_positive_rate_gap": 0.08522013778484361,
+        "predictive_parity_gap": 0.04803093836771277,
+        "auc_gap": 0.014962689355429548,
+        "base_rate_gap": 0.04673284577177339,
+        "regret_per_account_gap": 3072.8823738124265,
+        "n_groups_compared": 4
+      },
+      "EDUCATION": {
+        "demographic_parity_gap": 0.13451930054415395,
+        "equal_opportunity_gap": 0.06441455979917521,
+        "false_positive_rate_gap": 0.1361421870268824,
+        "predictive_parity_gap": 0.052810174244169394,
+        "auc_gap": 0.024272734726583756,
+        "base_rate_gap": 0.06869965852396215,
+        "regret_per_account_gap": 2436.5334928215234,
+        "n_groups_compared": 3
+      }
+    }
+  }
+}

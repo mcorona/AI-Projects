@@ -1,0 +1,6 @@
+# Serving only -- the dashboard recomputes every number from the committed
+# scored test split, so it needs neither scikit-learn nor joblib.
+numpy==2.5.2
+pandas==3.0.5
+plotly==7.0.0
+streamlit==1.62.0
