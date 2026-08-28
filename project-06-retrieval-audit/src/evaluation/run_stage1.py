@@ -31,7 +31,7 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 
-from src.data.beir import BY_NAME, load
+from src.data.beir import BY_NAME, DATASETS, load
 from src.evaluation.ir_metrics import evaluate_run
 from src.evaluation.significance import paired_bootstrap
 from src.retrieval.bm25 import BM25Retriever
@@ -165,10 +165,28 @@ def main():
     ap.add_argument("--datasets", nargs="+", default=REDUCED)
     args = ap.parse_args()
 
-    results = [run_dataset(n) for n in args.datasets]
-
     REPORTS.mkdir(parents=True, exist_ok=True)
     path = REPORTS / "stage1_fusion.json"
+
+    # Merge with whatever is already on disk rather than replacing it: the
+    # large corpora are run separately from the small ones, and a plain
+    # overwrite would silently drop four completed datasets. Written after
+    # every corpus, because a 95-minute run that persists only at the end
+    # loses everything to one interrupt -- which is how Stage 2 lost two
+    # finished corpora.
+    prior = {}
+    if path.exists():
+        for row in json.loads(path.read_text()).get("datasets", []):
+            prior[row["dataset"]] = row
+
+    results = []
+    for n in args.datasets:
+        prior[n] = run_dataset(n)
+        results = [prior[d.name] for d in DATASETS if d.name in prior]
+        path.write_text(json.dumps({"datasets": results, "complete": False},
+                                   indent=2))
+        print(f"  [saved, {len(results)} corpora on disk]", flush=True)
+
     payload = {
         "claim_under_audit": (
             "Hybrid search consistently outperforms either method alone; "

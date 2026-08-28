@@ -2,6 +2,99 @@
   "claim_under_audit": "Hybrid search consistently outperforms either method alone; adding BM25 to pure vector search is the single highest-impact retrieval upgrade.",
   "rrf_k": 60,
   "top_k": 100,
+  "complete": true,
+  "corpora_run": 6,
+  "corpora_planned": 7,
+  "not_run": [
+    "quora"
+  ],
+  "hypothesis_correlation": -0.8674305075634127,
+  "pairs": [
+    {
+      "dataset": "scifact",
+      "retriever": "minilm",
+      "gap": -0.010578908640849427,
+      "fusion_delta": 0.04926180885908195,
+      "p_value": 0.0006
+    },
+    {
+      "dataset": "scifact",
+      "retriever": "bge",
+      "gap": 0.08473072713225205,
+      "fusion_delta": -0.03547126781683925,
+      "p_value": 0.0102
+    },
+    {
+      "dataset": "nfcorpus",
+      "retriever": "minilm",
+      "gap": 0.007964041270460132,
+      "fusion_delta": 0.01998173874327646,
+      "p_value": 0.0166
+    },
+    {
+      "dataset": "nfcorpus",
+      "retriever": "bge",
+      "gap": 0.0657919033972949,
+      "fusion_delta": -0.01926653045663708,
+      "p_value": 0.011
+    },
+    {
+      "dataset": "arguana",
+      "retriever": "minilm",
+      "gap": 0.08920269624333788,
+      "fusion_delta": -0.002597582534794303,
+      "p_value": 0.72
+    },
+    {
+      "dataset": "arguana",
+      "retriever": "bge",
+      "gap": 0.22569782704982777,
+      "fusion_delta": -0.07979628531436929,
+      "p_value": 0.0
+    },
+    {
+      "dataset": "scidocs",
+      "retriever": "minilm",
+      "gap": 0.0687537023439321,
+      "fusion_delta": -0.02068702179838693,
+      "p_value": 0.0
+    },
+    {
+      "dataset": "scidocs",
+      "retriever": "bge",
+      "gap": 0.06959397060282702,
+      "fusion_delta": -0.025220338756490615,
+      "p_value": 0.0
+    },
+    {
+      "dataset": "trec-covid",
+      "retriever": "minilm",
+      "gap": -0.1194301327294301,
+      "fusion_delta": 0.20884651313206512,
+      "p_value": 0.0
+    },
+    {
+      "dataset": "trec-covid",
+      "retriever": "bge",
+      "gap": 0.18896915340057507,
+      "fusion_delta": -0.018045840940563985,
+      "p_value": 0.4198
+    },
+    {
+      "dataset": "fiqa",
+      "retriever": "minilm",
+      "gap": 0.13130906190164848,
+      "fusion_delta": -0.008618935812952883,
+      "p_value": 0.4002
+    },
+    {
+      "dataset": "fiqa",
+      "retriever": "bge",
+      "gap": 0.16886889426403473,
+      "fusion_delta": -0.047437972086632224,
+      "p_value": 0.0
+    }
+  ],
   "datasets": [
     {
       "dataset": "scifact",
@@ -283,6 +376,192 @@
       }
     },
     {
+      "dataset": "scidocs",
+      "self_match_queries": 0,
+      "self_match_share": 0.0,
+      "label": "SciDocs",
+      "domain": "Scientific citation",
+      "note": "Citation prediction from a title -- neither retriever's native task.",
+      "documents": 25657,
+      "queries": 1000,
+      "seconds": 274.4,
+      "metrics": {
+        "bm25": {
+          "ndcg@10": 0.14765191141588066,
+          "recall@10": 0.15406666666666666,
+          "precision@10": 0.076,
+          "mrr@10": 0.26179523809523814,
+          "ndcg@100": 0.21140776252640722,
+          "recall@100": 0.34258333333333335,
+          "precision@100": 0.01687,
+          "mrr@100": 0.2731030102951428
+        },
+        "minilm": {
+          "ndcg@10": 0.21640561375981276,
+          "recall@10": 0.23086666666666666,
+          "precision@10": 0.114,
+          "mrr@10": 0.3594198412698413,
+          "ndcg@100": 0.3121237140361731,
+          "recall@100": 0.5101166666666667,
+          "precision@100": 0.025160000000000005,
+          "mrr@100": 0.37071576116777444
+        },
+        "bge": {
+          "ndcg@10": 0.21724588201870768,
+          "recall@10": 0.22961666666666666,
+          "precision@10": 0.11330000000000001,
+          "mrr@10": 0.358606746031746,
+          "ndcg@100": 0.3069464430069005,
+          "recall@100": 0.49568333333333336,
+          "precision@100": 0.024410000000000005,
+          "mrr@100": 0.369983420897633
+        },
+        "rrf_minilm": {
+          "ndcg@10": 0.19571859196142583,
+          "recall@10": 0.20648333333333335,
+          "precision@10": 0.102,
+          "mrr@10": 0.33136547619047624,
+          "ndcg@100": 0.2871152514522485,
+          "recall@100": 0.47558333333333336,
+          "precision@100": 0.02344,
+          "mrr@100": 0.3439315759954559
+        },
+        "rrf_bge": {
+          "ndcg@10": 0.1920255432622171,
+          "recall@10": 0.19903333333333337,
+          "precision@10": 0.09830000000000001,
+          "mrr@10": 0.3275742063492064,
+          "ndcg@100": 0.28308551160322315,
+          "recall@100": 0.46635000000000004,
+          "precision@100": 0.02296,
+          "mrr@100": 0.34164946530680196
+        }
+      },
+      "tests": {
+        "rrf_minilm_vs_minilm": {
+          "mean_difference": -0.02068702179838693,
+          "ci_low": -0.029006995722572194,
+          "ci_high": -0.012280023583723295,
+          "p_value": 0.0,
+          "n_queries": 1000
+        },
+        "minilm_vs_bm25": {
+          "mean_difference": 0.0687537023439321,
+          "ci_low": 0.05829957430865108,
+          "ci_high": 0.07918992453668972,
+          "p_value": 0.0,
+          "n_queries": 1000
+        },
+        "rrf_bge_vs_bge": {
+          "mean_difference": -0.025220338756490615,
+          "ci_low": -0.03305145880248283,
+          "ci_high": -0.01742301932922812,
+          "p_value": 0.0,
+          "n_queries": 1000
+        },
+        "bge_vs_bm25": {
+          "mean_difference": 0.06959397060282706,
+          "ci_low": 0.05945997019589402,
+          "ci_high": 0.07968967184258222,
+          "p_value": 0.0,
+          "n_queries": 1000
+        }
+      }
+    },
+    {
+      "dataset": "trec-covid",
+      "self_match_queries": 0,
+      "self_match_share": 0.0,
+      "label": "TREC-COVID",
+      "domain": "Biomedical",
+      "note": "50 queries only, deeply judged. BM25 historically competitive.",
+      "documents": 171332,
+      "queries": 50,
+      "seconds": 1991.4,
+      "metrics": {
+        "bm25": {
+          "ndcg@10": 0.591723136689704,
+          "recall@10": 0.015649438039953237,
+          "precision@10": 0.6460000000000001,
+          "mrr@10": 0.8109999999999999,
+          "ndcg@100": 0.4216574962027363,
+          "recall@100": 0.10084050707647332,
+          "precision@100": 0.45,
+          "mrr@100": 0.8109999999999999
+        },
+        "minilm": {
+          "ndcg@10": 0.4722930039602739,
+          "recall@10": 0.012836078700997905,
+          "precision@10": 0.504,
+          "mrr@10": 0.7243809523809525,
+          "ndcg@100": 0.35168155894073655,
+          "recall@100": 0.08551749768487697,
+          "precision@100": 0.3614,
+          "mrr@100": 0.727499137336094
+        },
+        "bge": {
+          "ndcg@10": 0.7806922900902791,
+          "recall@10": 0.022076535324569324,
+          "precision@10": 0.83,
+          "mrr@10": 0.9179999999999999,
+          "ndcg@100": 0.5818504827628255,
+          "recall@100": 0.1406060337521087,
+          "precision@100": 0.5933999999999999,
+          "mrr@100": 0.9179999999999999
+        },
+        "rrf_minilm": {
+          "ndcg@10": 0.681139517092339,
+          "recall@10": 0.017877507636605304,
+          "precision@10": 0.7160000000000001,
+          "mrr@10": 0.9042222222222221,
+          "ndcg@100": 0.4451514540173598,
+          "recall@100": 0.10627865902135276,
+          "precision@100": 0.4544,
+          "mrr@100": 0.9042222222222221
+        },
+        "rrf_bge": {
+          "ndcg@10": 0.762646449149715,
+          "recall@10": 0.0201714622397975,
+          "precision@10": 0.802,
+          "mrr@10": 0.925,
+          "ndcg@100": 0.5536857665662909,
+          "recall@100": 0.13556817687321085,
+          "precision@100": 0.5723999999999999,
+          "mrr@100": 0.925
+        }
+      },
+      "tests": {
+        "rrf_minilm_vs_minilm": {
+          "mean_difference": 0.20884651313206512,
+          "ci_low": 0.14737416960531904,
+          "ci_high": 0.27338343015759675,
+          "p_value": 0.0,
+          "n_queries": 50
+        },
+        "minilm_vs_bm25": {
+          "mean_difference": -0.11943013272943025,
+          "ci_low": -0.20106923003889454,
+          "ci_high": -0.03935967104263059,
+          "p_value": 0.002,
+          "n_queries": 50
+        },
+        "rrf_bge_vs_bge": {
+          "mean_difference": -0.018045840940563985,
+          "ci_low": -0.061343061372897405,
+          "ci_high": 0.0237341281777249,
+          "p_value": 0.4198,
+          "n_queries": 50
+        },
+        "bge_vs_bm25": {
+          "mean_difference": 0.18896915340057485,
+          "ci_low": 0.13044804294503015,
+          "ci_high": 0.24980793900300824,
+          "p_value": 0.0,
+          "n_queries": 50
+        }
+      }
+    },
+    {
       "dataset": "fiqa",
       "self_match_queries": 55,
       "self_match_share": 0.0849,
@@ -374,41 +653,6 @@
           "n_queries": 648
         }
       }
-    }
-  ],
-  "hypothesis_correlation": -0.9129582470156783,
-  "pairs": [
-    {
-      "gap": -0.010578908640849427,
-      "fusion_delta": 0.04926180885908195
-    },
-    {
-      "gap": 0.08473072713225205,
-      "fusion_delta": -0.03547126781683925
-    },
-    {
-      "gap": 0.007964041270460132,
-      "fusion_delta": 0.01998173874327646
-    },
-    {
-      "gap": 0.0657919033972949,
-      "fusion_delta": -0.01926653045663708
-    },
-    {
-      "gap": 0.08920269624333788,
-      "fusion_delta": -0.002597582534794303
-    },
-    {
-      "gap": 0.22569782704982777,
-      "fusion_delta": -0.07979628531436929
-    },
-    {
-      "gap": 0.13130906190164848,
-      "fusion_delta": -0.008618935812952883
-    },
-    {
-      "gap": 0.16886889426403473,
-      "fusion_delta": -0.047437972086632224
     }
   ]
 }

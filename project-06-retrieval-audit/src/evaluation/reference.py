@@ -44,6 +44,16 @@ REFERENCE: Dict[str, Dict[str, tuple]] = {
         "minilm": (0.501, "MTEB", "recalled"),
         "bge":    (0.636, "MTEB / BGE paper", "recalled"),
     },
+    "scidocs": {
+        "bm25":   (0.158, "BEIR paper", "recalled"),
+        "minilm": (0.216, "MTEB", "recalled"),
+        "bge":    (0.217, "MTEB / BGE paper", "recalled"),
+    },
+    "trec-covid": {
+        "bm25":   (0.656, "BEIR paper", "recalled"),
+        "minilm": (0.473, "MTEB", "recalled"),
+        "bge":    (0.781, "MTEB / BGE paper", "recalled"),
+    },
     "fiqa": {
         "bm25":   (0.236, "BEIR paper", "verified in project 3"),
         "minilm": (0.369, "MTEB", "recalled"),
