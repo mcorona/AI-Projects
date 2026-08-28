@@ -1,0 +1,11 @@
+# Minimal subset to serve app.py. The app loads a trained checkpoint and
+# classifies one image at a time -- it never trains, never runs the
+# classical baselines, and never re-evaluates, so scikit-image, timm,
+# Jupyter, matplotlib and pytest are all left out.
+numpy>=1.24.0
+pandas>=2.0.0
+pillow>=10.0.0
+torch>=2.2.0
+torchvision>=0.17.0
+scikit-learn>=1.3.0
+streamlit>=1.29.0

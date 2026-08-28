@@ -1,0 +1,195 @@
+{
+  "majority": {
+    "accuracy": 0.026710275279367673,
+    "macro_f1": 0.001406237668515343,
+    "seconds": 0.0,
+    "breeds_in_imagenet": {
+      "n": 2383,
+      "accuracy": 0.0
+    },
+    "breeds_not_in_imagenet": {
+      "n": 1286,
+      "accuracy": 0.07620528771384137
+    },
+    "cats": {
+      "n": 1183,
+      "accuracy": 0.08284023668639054
+    },
+    "dogs": {
+      "n": 2486,
+      "accuracy": 0.0
+    },
+    "top_confusions": [
+      {
+        "true": "American Bulldog",
+        "predicted": "Abyssinian",
+        "count": 100
+      },
+      {
+        "true": "American Pit Bull Terrier",
+        "predicted": "Abyssinian",
+        "count": 100
+      },
+      {
+        "true": "Basset Hound",
+        "predicted": "Abyssinian",
+        "count": 100
+      },
+      {
+        "true": "Beagle",
+        "predicted": "Abyssinian",
+        "count": 100
+      },
+      {
+        "true": "Bengal",
+        "predicted": "Abyssinian",
+        "count": 100
+      },
+      {
+        "true": "Birman",
+        "predicted": "Abyssinian",
+        "count": 100
+      },
+      {
+        "true": "British Shorthair",
+        "predicted": "Abyssinian",
+        "count": 100
+      },
+      {
+        "true": "Chihuahua",
+        "predicted": "Abyssinian",
+        "count": 100
+      }
+    ]
+  },
+  "zero_shot": {
+    "accuracy": 0.6396838375579177,
+    "macro_f1": 0.556072034043664,
+    "accuracy_on_reachable_classes": 0.9848929920268569,
+    "reachable_share_of_test": 0.6494957754156446,
+    "n_reachable": 2383,
+    "seconds": 36.8,
+    "breeds_in_imagenet": {
+      "n": 2383,
+      "accuracy": 0.9848929920268569
+    },
+    "breeds_not_in_imagenet": {
+      "n": 1286,
+      "accuracy": 0.0
+    },
+    "cats": {
+      "n": 1183,
+      "accuracy": 0.2502113271344041
+    },
+    "dogs": {
+      "n": 2486,
+      "accuracy": 0.825020112630732
+    },
+    "top_confusions": [
+      {
+        "true": "Bengal",
+        "predicted": "Egyptian Mau",
+        "count": 100
+      },
+      {
+        "true": "Russian Blue",
+        "predicted": "Egyptian Mau",
+        "count": 97
+      },
+      {
+        "true": "Abyssinian",
+        "predicted": "Egyptian Mau",
+        "count": 96
+      },
+      {
+        "true": "American Pit Bull Terrier",
+        "predicted": "Staffordshire Bull Terrier",
+        "count": 93
+      },
+      {
+        "true": "Birman",
+        "predicted": "Siamese",
+        "count": 93
+      },
+      {
+        "true": "British Shorthair",
+        "predicted": "Egyptian Mau",
+        "count": 87
+      },
+      {
+        "true": "Bombay",
+        "predicted": "Egyptian Mau",
+        "count": 85
+      },
+      {
+        "true": "Sphynx",
+        "predicted": "Egyptian Mau",
+        "count": 68
+      }
+    ]
+  },
+  "classical": {
+    "accuracy": 0.09048787135459253,
+    "macro_f1": 0.08973801898725417,
+    "feature_dim": 1980,
+    "seconds": 129.8,
+    "breeds_in_imagenet": {
+      "n": 2383,
+      "accuracy": 0.0960973562736047
+    },
+    "breeds_not_in_imagenet": {
+      "n": 1286,
+      "accuracy": 0.08009331259720062
+    },
+    "cats": {
+      "n": 1183,
+      "accuracy": 0.09467455621301775
+    },
+    "dogs": {
+      "n": 2486,
+      "accuracy": 0.08849557522123894
+    },
+    "top_confusions": [
+      {
+        "true": "Japanese Chin",
+        "predicted": "Saint Bernard",
+        "count": 11
+      },
+      {
+        "true": "English Setter",
+        "predicted": "English Cocker Spaniel",
+        "count": 10
+      },
+      {
+        "true": "German Shorthaired",
+        "predicted": "American Pit Bull Terrier",
+        "count": 10
+      },
+      {
+        "true": "German Shorthaired",
+        "predicted": "English Cocker Spaniel",
+        "count": 10
+      },
+      {
+        "true": "Boxer",
+        "predicted": "Basset Hound",
+        "count": 9
+      },
+      {
+        "true": "Havanese",
+        "predicted": "Keeshond",
+        "count": 9
+      },
+      {
+        "true": "Maine Coon",
+        "predicted": "Persian",
+        "count": 9
+      },
+      {
+        "true": "Wheaten Terrier",
+        "predicted": "Samoyed",
+        "count": 9
+      }
+    ]
+  }
+}

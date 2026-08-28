@@ -1,0 +1,140 @@
+{
+  "finetuned_vs_linear_probe": {
+    "overall": {
+      "mcnemar": {
+        "a_only": 96,
+        "b_only": 156,
+        "discordant": 252,
+        "p_value": 0.00018942
+      },
+      "bootstrap": {
+        "mean_difference": -0.016353229762878167,
+        "ci_low": -0.025074952303079857,
+        "ci_high": -0.008176614881439084,
+        "n": 3669
+      }
+    },
+    "breeds_in_imagenet": {
+      "n": 2383,
+      "mcnemar": {
+        "a_only": 24,
+        "b_only": 68,
+        "discordant": 92,
+        "p_value": 4.94e-06
+      },
+      "bootstrap": {
+        "mean_difference": -0.018464120856063786,
+        "ci_low": -0.02643726395300042,
+        "ci_high": -0.01049097775912715,
+        "n": 2383
+      }
+    },
+    "breeds_not_in_imagenet": {
+      "n": 1286,
+      "mcnemar": {
+        "a_only": 72,
+        "b_only": 88,
+        "discordant": 160,
+        "p_value": 0.23558243
+      },
+      "bootstrap": {
+        "mean_difference": -0.012441679626749611,
+        "ci_low": -0.03188180404354588,
+        "ci_high": 0.006220839813374806,
+        "n": 1286
+      }
+    }
+  },
+  "linear_probe_vs_zero_shot": {
+    "overall": {
+      "mcnemar": {
+        "a_only": 1126,
+        "b_only": 67,
+        "discordant": 1193,
+        "p_value": 0.0
+      },
+      "bootstrap": {
+        "mean_difference": 0.28863450531479967,
+        "ci_low": 0.2728263832106841,
+        "ci_high": 0.30444262741891526,
+        "n": 3669
+      }
+    },
+    "breeds_in_imagenet": {
+      "n": 2383,
+      "mcnemar": {
+        "a_only": 10,
+        "b_only": 67,
+        "discordant": 77,
+        "p_value": 0.0
+      },
+      "bootstrap": {
+        "mean_difference": -0.023919429290809903,
+        "ci_low": -0.031053294167016365,
+        "ci_high": -0.01678556441460344,
+        "n": 2383
+      }
+    },
+    "breeds_not_in_imagenet": {
+      "n": 1286,
+      "mcnemar": {
+        "a_only": 1116,
+        "b_only": 0,
+        "discordant": 1116,
+        "p_value": 0.0
+      },
+      "bootstrap": {
+        "mean_difference": 0.8678071539657853,
+        "ci_low": 0.8491446345256609,
+        "ci_high": 0.885692068429238,
+        "n": 1286
+      }
+    }
+  },
+  "finetuned_vs_zero_shot": {
+    "overall": {
+      "mcnemar": {
+        "a_only": 1115,
+        "b_only": 116,
+        "discordant": 1231,
+        "p_value": 0.0
+      },
+      "bootstrap": {
+        "mean_difference": 0.2722812755519215,
+        "ci_low": 0.25565549195966203,
+        "ci_high": 0.28890705914418097,
+        "n": 3669
+      }
+    },
+    "breeds_in_imagenet": {
+      "n": 2383,
+      "mcnemar": {
+        "a_only": 15,
+        "b_only": 116,
+        "discordant": 131,
+        "p_value": 0.0
+      },
+      "bootstrap": {
+        "mean_difference": -0.042383550146873686,
+        "ci_low": -0.05161561057490558,
+        "ci_high": -0.0331514897188418,
+        "n": 2383
+      }
+    },
+    "breeds_not_in_imagenet": {
+      "n": 1286,
+      "mcnemar": {
+        "a_only": 1100,
+        "b_only": 0,
+        "discordant": 1100,
+        "p_value": 0.0
+      },
+      "bootstrap": {
+        "mean_difference": 0.8553654743390358,
+        "ci_low": 0.8359253499222395,
+        "ci_high": 0.8740279937791602,
+        "n": 1286
+      }
+    }
+  }
+}
